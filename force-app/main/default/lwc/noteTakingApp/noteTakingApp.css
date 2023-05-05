@@ -1,0 +1,87 @@
+.note-taking-app{
+background : rgb(7, 7, 40);
+min-height:100vh;
+display:flex;
+flex-wrap :wrap;
+padding:16px;
+}
+.container-box{
+    
+background: white;;
+ height:250px;
+ width:250px;
+ margin:12px;
+ border-radius : 12px;
+}
+.dot-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.dotted-circle{
+    border: 2px dotted rgb(7, 7, 40);
+    padding: 25px;
+    border-radius: 50%;
+}
+h2{
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 12px;
+}
+.custom-icon{
+    --slds-c-icon-color-foreground-default :  rgb(7, 7, 40);
+}
+.edit-icon{
+    cursor :pointer;
+    --slds-c-icon-color-background : rgb(7, 7, 40); 
+}
+.delete-icon{
+    cursor :pointer;
+    --slds-c-icon-color-background : #e91515;
+}
+.edit-icon:active,.delete-icon:active{
+    animation: gelatine 0.5s ;
+}
+
+header{
+    background: #0076d3;
+    color:white;
+    padding: 4px 16px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    text-align: center;
+}
+
+header > h2{
+    margin-top:0px;
+}
+.notes{
+    height: 173px;
+    overflow: auto;
+    padding: 4px 16px;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 16px;
+    background: #cecece;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.date{
+    color: grey;
+    font-size: 14px;
+    font-style: italic;
+}
+
+@keyframes gelatine {
+    from, to { transform: scale(1, 1); }
+    25% { transform: scale(0.9, 1.1); }
+    50% { transform: scale(1.1, 0.9); }
+    75% { transform: scale(0.95, 1.05); }
+  }

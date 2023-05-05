@@ -1,0 +1,16 @@
+.slds-badge{
+    --slds-c-badge-color-background: #f6c403;
+    /* --slds-c-badge-color-border :  #f6c403; */
+    --slds-c-badge-text-color : #242c37;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+h2{
+    padding: 8px 16px;
+    background: #242c37;
+    font-weight: bold;
+    font-size: 20px;
+    color:  #fff;
+    border-radius:5px;
+}

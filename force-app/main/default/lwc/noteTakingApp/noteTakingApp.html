@@ -1,0 +1,71 @@
+<template>
+
+    <c-note-taking-toast-comp></c-note-taking-toast-comp>
+    <div class="note-taking-app">
+        <div class="container-box dot-box" onclick={createNoteHandler}>
+            <div class="dotted-circle">
+                <lightning-icon class="custom-icon" icon-name="utility:add" alternative-text="Add Icon" title="Add Note" size="large"></lightning-icon>
+            </div>
+            <h2>Add New Note</h2>
+        </div>
+  <template for:each={noteList} for:item="note">
+    <div key={note.Id} class="container-box ">
+        <header>
+            <h2 class="slds-truncate">{note.Name}</h2>
+        </header>
+        <div class="notes">
+         <c-note-taking-append-child result ={note.Note_Description__c}></c-note-taking-append-child>
+        </div>
+        <footer class="footer">
+            <div class="date">{note.formattedDate}</div>
+            <div>
+                <lightning-icon class="slds-var-m-right_x-small edit-icon" 
+                                icon-name="action:edit"
+                                data-recordid ={note.Id} 
+                                alternative-text="Edit Icon" 
+                                title="Edit Note" size="xx-small"
+                                onclick={editNoteHandler}
+                ></lightning-icon>
+                <lightning-icon class="delete-icon" 
+                                icon-name="action:delete"
+                                data-recordid ={note.Id}  
+                                alternative-text="Delete Icon" 
+                                title="Delete Note" size="xx-small"
+                                onclick={deleteNoteHandler}
+                ></lightning-icon>    
+            </div>
+        </footer>
+    </div>
+    
+  </template>
+    
+    </div>
+
+ <template if:true={showModal}>
+    <c-note-modal-comp>
+        <h1 slot="header" class="slds-modal__title">{ModalName}</h1>
+        <form>
+       <lightning-input type="text" value={noteRecord.Name} name="Name" 
+       label="Title" placeholder="title" class="slds-var-m-bottom_medium"
+       onchange={changeHandler}
+       required ></lightning-input>
+       <lightning-input-rich-text
+         label="Description"
+         value={noteRecord.Note_Description__c}
+         name="Note_Description__c"
+         placeholder="Type something interesting"
+         label-visible
+         formats={allowedFormats}
+         onchange={changeHandler}
+         required >
+        </lightning-input-rich-text>
+
+        </form>
+        <footer slot="footer"> 
+            <button class="slds-button slds-button_neutral" onclick={closeModalHandler}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={formSubmitHandler} disabled={isFormInValid}>{ModalName}</button>
+        </footer>
+    </c-note-modal-comp>
+ </template>
+    
+</template>

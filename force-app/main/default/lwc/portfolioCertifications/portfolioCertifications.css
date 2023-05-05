@@ -1,0 +1,31 @@
+img{
+    height:60px;
+    margin-right:16px;
+}
+h2{
+    padding: 8px 16px;
+    background: #242c37;
+    font-weight: bold;
+    font-size: 20px;
+    color:  #fff;
+    border-radius:5px;
+}
+
+.cert-box{
+    background: #ffdf7b;
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cert-box:hover{
+    background:#d8d8d8;
+    cursor:pointer;
+}
+
+.classic-theme{
+    /* --slds-c-icon-color-foreground:#1c80a9; */
+    --slds-c-icon-color-foreground-default :#1c80a9;
+}

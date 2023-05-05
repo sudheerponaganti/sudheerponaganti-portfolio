@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordId" label ="Record Id" type="String"></property>
+            <property name="linkedinUrl" label =" Linkedin URL"  type="String"></property>
+            <property name="twitterUrl" label =" Twitter URL"  type="String"></property>
+            <property name="githubUrl" label =" Github URL"  type="String"></property>
+            <property name="youtubeUrl" label =" Youtube URL"  type="String"></property>
+            <property name="trailheadUrl" label =" Trailhead URL"  type="String"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

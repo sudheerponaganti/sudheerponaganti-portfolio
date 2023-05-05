@@ -1,0 +1,88 @@
+<template>
+    <div class="tabs-wrapper show-tabs-on-desktop-view">
+
+        <lightning-tabset variant="scoped">
+            <lightning-tab label="Summary">
+                <template if:true={recordId}>
+               <c-portfolio-summary record-id={recordId} object-api-name={objectApiName}></c-portfolio-summary>
+            </template>
+            </lightning-tab>
+            <lightning-tab label="Work Experience">
+                <template if:true={recordId}>
+               <c-portfolio-work-experience record-id={recordId}></c-portfolio-work-experience>
+                </template>
+            </lightning-tab>
+            <lightning-tab label="Personal Projects">
+                <c-portfolio-personal-projects></c-portfolio-personal-projects>
+            </lightning-tab>
+            <lightning-tab label="Skills">
+                <template if:true={recordId}>
+               <c-portfolio-skills record-id={recordId}></c-portfolio-skills>
+            </template>
+            </lightning-tab>
+            <lightning-tab label="Certifications">
+                <template if:true={recordId}>
+                    <c-portfolio-certifications record-id={recordId}></c-portfolio-certifications>
+                </template>
+            </lightning-tab>
+            <lightning-tab label="Education">
+                <template if:true={recordId}>
+                    <c-portfolio-education record-id={recordId}></c-portfolio-education>
+                </template>
+            </lightning-tab>
+
+            <lightning-tab label="Other Details">
+                <template if:true={recordId}>
+                    <c-portfolio-other-details record-id={recordId}></c-portfolio-other-details>
+                </template>
+            </lightning-tab>
+        </lightning-tabset>
+
+    </div>
+
+    <div class="accordion-wrapper show-accordion-on-mobile-view">
+        <lightning-accordion allow-multiple-sections-open>
+        <lightning-accordion-section name="Summary" label="Summary">
+            <template if:true={recordId}>
+                <c-portfolio-summary record-id={recordId} object-api-name={objectApiName}></c-portfolio-summary>
+             </template>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="Work Experience" label="Work Experience">
+            <template if:true={recordId}>
+                <c-portfolio-work-experience record-id={recordId}></c-portfolio-work-experience>
+                 </template>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="Personal Projects" label="Personal Projects">
+            <c-portfolio-personal-projects></c-portfolio-personal-projects>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="Skills" label="Skills">
+            <template if:true={recordId}>
+                <c-portfolio-skills record-id={recordId}></c-portfolio-skills>
+             </template>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="Certifications" label="Certifications">
+            <template if:true={recordId}>
+                <c-portfolio-certifications record-id={recordId}></c-portfolio-certifications>
+             </template>
+        </lightning-accordion-section>
+        
+        <lightning-accordion-section name="Education" label="Education">
+            <template if:true={recordId}>
+                <c-portfolio-education record-id={recordId}></c-portfolio-education>
+             </template>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="Other Details" label="Other Details">
+            <template if:true={recordId}>
+                <c-portfolio-other-details record-id={recordId}></c-portfolio-other-details>
+             </template>
+        </lightning-accordion-section>
+
+    </lightning-accordion>
+
+    </div>
+</template>

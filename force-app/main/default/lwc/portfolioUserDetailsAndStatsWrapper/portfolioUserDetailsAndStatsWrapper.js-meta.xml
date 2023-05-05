@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordId" label="Record Id" type="String"></property>
+            <property name="objectApiName" label="Object Api Name" type="String"></property>
+            <property name="resumeUrl" label="Resume Link" type="String" ></property>
+            <property name="rank" label="Trailhead Rank" type="String" datasource="Scout,hiker,Explorer,Adventurer, Mountaineer,Expeditioner,Ranger,Double star ranger,Triple star ranger,Four star ranger,Five star ranger" ></property>
+            <property name="badges" label=" Badges" type="String"></property>
+            <property name="points" label="Points" type="String"></property>
+            <property name="trails" label="Trails" type="String"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

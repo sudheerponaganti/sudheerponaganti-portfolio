@@ -1,0 +1,34 @@
+<template>
+
+    <template if:false={isCertificateOpen}>
+   <h2 class="slds-var-m-bottom_medium">Salesforce Certifications</h2> 
+<Lightning-layout multiple-rows>
+    <template for:each={sfCertificationList} for:item="sfCertItem">
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small" key={sfCertItem}>
+            <div class="cert-box" data-name={sfCertItem} onclick={openCertificateHandler}>
+                <img src={certLogo} alt="Cert" >
+                <span>{sfCertItem}</span>
+            </div>
+        </lightning-layout-item>
+    </template>
+</Lightning-layout>
+
+   <h2 class="slds-var-m-bottom_medium">Other Certifications</h2> 
+
+   <Lightning-layout multiple-rows>
+    <template for:each={otherCertificationList} for:item="otherCertItem">
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small" key={otherCertItem}>
+            <div class="cert-box" data-name={otherCertItem} onclick={openCertificateHandler}>
+                <lightning-icon  class="classic-theme" icon-name="utility:classic_interface" alternative-text="classic_interface" title="classic_interfac" size="large"></lightning-icon>
+                <span class="slds-var-m-left_medium">{otherCertItem}</span>
+            </div>
+        </lightning-layout-item>
+    </template>
+</Lightning-layout>
+</template>
+
+<template if:true={isCertificateOpen}>
+<c-portfolio-certifications-template cert-name ={certName} onback={backHandler}></c-portfolio-certifications-template>
+</template>
+
+</template>

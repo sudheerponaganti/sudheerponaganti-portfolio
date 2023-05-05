@@ -1,0 +1,6 @@
+.fixed-notification{
+    position:fixed;
+    /* left:50%; */
+    /* transform:translateX(-50%); */
+    left : calc(50% - 50vw);
+}

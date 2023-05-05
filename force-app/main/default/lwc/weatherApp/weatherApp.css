@@ -1,0 +1,100 @@
+.weather-app{
+    /* background : rgb(5, 5,45); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding:10px;
+}
+/* .weather-app.black{
+    background:black !important;
+} */
+.container{
+    max-width: 400px;
+    min-width: 350px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+header{
+    font-weight: bold;
+    font-size: 30px;
+    color: #090930eb;
+    padding: 16px;
+    border-bottom: 1px solid #928a8a57;
+    display:flex;
+    justify-content: center;
+}
+section{
+    padding :16px;
+}
+.custom-icon{
+    padding:5px;
+    font-weight: bold;
+    font-size: 22px;
+}
+.search-button{
+    padding:8px;
+}
+
+.success-class{
+    color: green;
+    padding: 7px;
+    background: rgba(24,186,12,0.5);
+    border-radius: 20px;
+}
+.error-class{
+    color: #900d0d;
+    padding: 7px;
+    background: rgba(227,22,44,0.5);
+    border-radius: 20px;
+}
+.temperature{
+     font-size: 60px;
+     font-family:sans-serif;
+     font-weight:700;
+     padding-top:5px;
+}
+.description{
+    font-size: 24px;
+    line-height: 32px;
+    padding-top:5px;
+}
+.location{
+    font-size: 24px;
+    line-height: 32px;
+    padding-top:5px;
+}
+
+footer{
+    display:flex;
+    justify-content: space-around;
+    border-top: 1px solid #928a8a57;
+
+}
+.footer-left{
+    width:100%;
+    padding:10px;
+}
+.footer-right{
+    width:100%;
+    padding:10px;
+    border-left:1px solid #928a8a57;
+}
+
+.weather-image{
+    max-width:125px;
+}
+.thermo-meter,.humidity{
+    display:flex;
+    justify-content: center;
+}
+.arrow-icon{
+    cursor:pointer;
+}
+.background-change{
+    border-radius: 25px;
+    position: absolute;
+    top: -31px;
+    left: 30%;
+}

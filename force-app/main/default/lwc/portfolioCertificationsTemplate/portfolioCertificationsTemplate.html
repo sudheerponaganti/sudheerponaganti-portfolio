@@ -1,0 +1,16 @@
+<template>
+    <Lightning-layout multiple-rows>
+        
+            <lightning-layout-item size="12"  padding="around-small">
+                <div class="cert">
+                    <img src={certImg} alt={certName} >
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="12"  padding="around-small">
+                <div class="cert-template-box"  onclick={backHandler}>
+                   <span>Back To Certifications</span> 
+                 </div>
+            </lightning-layout-item>
+    </Lightning-layout>
+</template>

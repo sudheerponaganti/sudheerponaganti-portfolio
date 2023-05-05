@@ -1,0 +1,65 @@
+<template>
+    <div class="weather-app" style="background : rgb(5, 5,45);">
+        <div class="slds-card container">
+            <button onclick={colorChangeHandler} class="background-change"> Change background</button>
+            <header>
+                <img  if:true={weatherResponse} src={arrowBackIcon} alt=" back arrow" onclick={resetHandler} class="slds-var-m-right_medium arrow-icon">
+                <h1>Weather App</h1>
+            </header>
+            <template if:false={weatherResponse}>
+            <section>
+                <div if:true={loadingText} class={isLoadingTextClass}>{loadingText}</div>
+                <form onsubmit={submitHandler}>
+                    <div class="slds-form-element slds-var-m-bottom_medium">
+                        <label class="slds-form-element__label" for="text-input-city"></label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="text-input-city" placeholder="Enter city name" value={cityName}
+                                required="" class="slds-input slds-text-align_center custom-icon" name="city"
+                                onkeyup={searchHandler} />
+                        </div>
+                    </div>
+
+                    <button if:false={isInvalidName} type="submit"
+                        class="slds-button slds-button_destructive slds-button_stretch search-button">Search</button>
+                </form>
+
+                <button if:true={isInvalidName}
+                    class="slds-button slds-button_destructive slds-button_stretch search-button"
+                    onclick={resetHandler}>Search Again</button>
+            </section>
+        </template>
+<template if:true={weatherResponse}>
+            <section >
+                <img src={weatherIcon} alt="Cloud Icon" class="weather-image">
+                <div class="temperature">
+                    <span>{weatherResponse.temperature}</span>
+                    <span>&deg;C</span> <!-- degree celsius entity-->
+                </div>
+                <div class="description">{weatherResponse.description}</div>
+                <div class="location">
+                 <img src={mapIcon} alt="Location Icon">
+                    <span>{weatherResponse.location}</span>
+                </div>
+            </section>
+            <footer>
+                <div class="footer-left">
+                    <div class="thermo-meter">
+                        <img src={thermometerIcon} alt=" Thermo Meter Icon">
+                        <div>{weatherResponse.feels_like} &#8451;</div>
+                    </div>
+                    <p> Feels Like</p>
+                </div>
+
+                <div class="footer-right">
+                    <div class="humidity">
+                        <img src={dropletIcon} alt="Humidity Icon">
+                        <div>{weatherResponse.humidity}</div>
+                    </div>
+                    <p>Humidity</p>
+                </div>
+
+            </footer>
+    </template>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,39 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="banner">
+      <div class="video-container">
+        <img src={socialMediaIcons.userPic} alt="Profile Pic" class="profile-pic">
+        <video src={profileVideo} style="display:none;" alt="Profile Video" class="video-class"></video>
+    </div>
+        <div class="name"> {fullName}</div>
+        <div class="designation">{designation} at {companyName}</div>
+        <div class="location">{companyLocation}</div>
+        <div>
+           <template if:true={linkedinUrl}>
+            <a href={linkedinUrl} target="_blank">
+                <img src={socialMediaIcons.linkedin} alt="Linkedin Icon" class="social-icon">
+            </a>
+        </template>
+            <template if:true={twitterUrl}>
+            <a href={twitterUrl} target="_blank">
+                <img src={socialMediaIcons.twitter} alt="twitter Icon" class="social-icon">
+            </a>
+        </template>
+            <template if:true={githubUrl}>
+            <a href={githubUrl} target="_blank">
+                <img src={socialMediaIcons.github} alt="github Icon" class="social-icon">
+            </a>
+        </template>
+            <template if:true={youtubeUrl}>
+            <a href={youtubeUrl} target="_blank">
+                <img src={socialMediaIcons.youtube} alt="youtube Icon" class="social-icon">
+            </a>
+        </template>
+            <template if:true={trailheadUrl}>
+            <a href={trailheadUrl} target="_blank">
+                <img src={socialMediaIcons.trailhead} alt="trailhead Icon" class="social-icon">
+            </a>
+        </template>
+        </div>
+    </div>
+</template>

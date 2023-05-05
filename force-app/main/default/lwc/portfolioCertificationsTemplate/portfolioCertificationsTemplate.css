@@ -1,0 +1,20 @@
+
+.cert-template-box{
+        cursor:pointer;
+        background: #f6c403;
+        color : #242c37;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 12px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cert{
+        /* padding: 12px;
+        border-radius: 5px; */
+        display: flex;
+        justify-content: center;
+    }

@@ -1,0 +1,19 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-layout multiple-rows>
+        <template for:each={projects} for:item="project">
+
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" key={project.name} >
+                <div class="card" >
+                    
+                    <a style="text-decoration:none;"  href={project.link} target="_blank">
+                        <img src={project.img} alt={project.name} style="width:100%">
+                       <div class="bottom">{project.name}</div>
+                    </a>
+                </div>
+            </lightning-layout-item>
+
+        </template>
+    </lightning-layout>
+   
+</template>

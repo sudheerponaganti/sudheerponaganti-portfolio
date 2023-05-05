@@ -1,0 +1,11 @@
+.slds-button_icon .chevron-down{
+    transition-duration: .5s;
+}
+
+.slds-button_icon.de-active  .chevron-down{
+    transform :rotateZ(-90deg);
+}
+
+.slds-timeline__item_task article{
+    transition-duration: .25s;
+}

@@ -1,0 +1,78 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <ul class="slds-timeline">
+        <template for:each={workExperienceList} for:item="work">
+            <li key={work.id}>
+                <div class="slds-timeline__item_expandable slds-timeline__item_task slds-is-open" data-index={work.id}>
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+    
+                            <button class="slds-button slds-button_icon"  data-id={work.id} onclick={timelineHandler}>
+                                <!-- <template if:true={work.isTimelineOpen}> -->
+                                <lightning-icon class="chevron-down" icon-name="utility:chevrondown" alternative-text="Chevron Down" title="Chevron Down"
+                                size="x-small"></lightning-icon>
+                                <!-- </template> -->
+
+                                <!-- <template if:false={work.isTimelineOpen}>
+                                <lightning-icon  class="chevron-right" icon-name="utility:chevronright" alternative-text="Chevron Right" title="Chevron Right"
+                                    size="x-small"></lightning-icon>
+                                </template> -->
+                            </button>
+    
+                            <div class="slds-icon_container slds-icon-standard-task slds-timeline__icon" title="task">
+                                <lightning-icon icon-name="standard:task" alternative-text="Task" title="Task"
+                                    size="small"></lightning-icon>
+                            </div>
+    
+                        </div>
+    
+                        <div class="slds-media__body">
+                            <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
+                                <div
+                                    class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
+                                    <h3 class="slds-truncate" title={work.Role}>
+                                        <strong>{work.Role}</strong>
+                                    </h3>
+    
+                                </div>
+                                <div class="slds-timeline__actions slds-timeline__actions_inline">
+                                    <template if:true={work.IsCurrent}>
+                                        <p class="slds-timeline__date">{work.JobStartDate} - Current</p>
+                                    </template>
+
+                                    <template if:false={work.IsCurrent}>
+                                        <p class="slds-timeline__date">{work.JobStartDate} - {work.JobEndDate}</p>
+                                    </template>
+                                   
+                                </div>
+                            </div>
+                            <p class="slds-var-m-horizontal_xx-small">
+                                {work.companyName}, {work.WorkLocation}
+                            </p>
+        
+                            <article 
+                                class="slds-box slds-timeline__item_details slds-theme_shade slds-var-m-top_x-small slds-var-m-horizontal_xx-small slds-var-p-around_medium">
+                                <div>
+                                    <lightning-record-view-form
+                                    object-api-name={work.apiName}
+                                    record-id={work.id}
+                                    >
+                                    <!-- <lightning-layout>
+                                        <lightning-layout-item size="12"> -->
+                                            <lightning-output-field field-name="JobDescription__c" variant="label-hidden"> </lightning-output-field>
+                                        <!-- </lightning-layout-item>
+                                    </lightning-layout> -->
+                                
+                                </lightning-record-view-form>
+                                </div>
+                            </article>
+
+    
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </template>
+      
+    </ul>
+</template>

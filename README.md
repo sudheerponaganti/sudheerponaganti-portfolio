@@ -43,6 +43,10 @@ EDUCATION TAB:
 
 using "portfolioEducation" component to get from "Education__c" object
 
+![image](https://user-images.githubusercontent.com/85873651/236638231-dd490ac4-06da-4940-a929-048221defa29.png)
+
+PERSONAL PROJECTS TAB
+
 ![image](https://user-images.githubusercontent.com/85873651/236633663-3f7fc9ca-abbd-426d-b3f9-8c50093cbed0.png)
 
 
@@ -51,6 +55,7 @@ using "portfolioCertifications" componet to get data from "Portfolio__c" and als
 
 ![image](https://user-images.githubusercontent.com/85873651/236633693-4c4a6e15-feb8-4c9b-b3a9-81e2a419f29a.png)
 
+![image](https://user-images.githubusercontent.com/85873651/236638254-58b6b30d-1fac-4ab2-bcfd-8fd1425ee73a.png)
 
 
 QUICK LOOK INTO PROJECT

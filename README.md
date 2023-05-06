@@ -37,6 +37,8 @@ I am using "portfolioWorkExperience', "portfolioSkills" componets to get data fr
 
 ![image](https://user-images.githubusercontent.com/85873651/236633647-a2a3cd96-c257-4993-b3ee-4b0791898106.png)
 
+![image](https://user-images.githubusercontent.com/85873651/236633677-47e931d7-ccf0-4428-aaec-3758accaedf2.png)
+
 EDUCATION TAB:
 
 using "portfolioEducation" component to get from "Education__c" object
@@ -45,10 +47,7 @@ using "portfolioEducation" component to get from "Education__c" object
 
 
 CERTIFICATIONS & OTHERS TAB :
-using "portfolioCertifications" componet to get data from "Portfolio__c" and also get certificates from Sattic Resources.
-
-![image](https://user-images.githubusercontent.com/85873651/236633677-47e931d7-ccf0-4428-aaec-3758accaedf2.png)
-
+using "portfolioCertifications" componet to get data from "Portfolio__c" and also get certificates from Static Resources.
 
 ![image](https://user-images.githubusercontent.com/85873651/236633693-4c4a6e15-feb8-4c9b-b3a9-81e2a419f29a.png)
 

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Superbadges__c</fullName>
+    <externalId>false</externalId>
+    <label>Superbadges</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Access Governance Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Access Governance Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Admin Super Set</fullName>
+                <default>false</default>
+                <label>Admin Super Set</label>
+            </value>
+            <value>
+                <fullName>Advanced Apex Specialist</fullName>
+                <default>false</default>
+                <label>Advanced Apex Specialist</label>
+            </value>
+            <value>
+                <fullName>Advanced Billing Specialist</fullName>
+                <default>false</default>
+                <label>Advanced Billing Specialist</label>
+            </value>
+            <value>
+                <fullName>Apex Specialist</fullName>
+                <default>false</default>
+                <label>Apex Specialist</label>
+            </value>
+            <value>
+                <fullName>App Builder Super Set</fullName>
+                <default>false</default>
+                <label>App Builder Super Set</label>
+            </value>
+            <value>
+                <fullName>App Customization Specialist</fullName>
+                <default>false</default>
+                <label>App Customization Specialist</label>
+            </value>
+            <value>
+                <fullName>Approval Process Management Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Approval Process Management Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Approval Process Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>Approval Process Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>Approval Process Troubleshooting Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Approval Process Troubleshooting Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Authentication Governance Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Authentication Governance Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Billing Specialist</fullName>
+                <default>false</default>
+                <label>Billing Specialist</label>
+            </value>
+            <value>
+                <fullName>Billing Specialist Super Set</fullName>
+                <default>false</default>
+                <label>Billing Specialist Super Set</label>
+            </value>
+            <value>
+                <fullName>Business Administration Specialist</fullName>
+                <default>false</default>
+                <label>Business Administration Specialist</label>
+            </value>
+            <value>
+                <fullName>CRM Analytics Data Preparation Specialist</fullName>
+                <default>false</default>
+                <label>CRM Analytics Data Preparation Specialist</label>
+            </value>
+            <value>
+                <fullName>CRM Analytics Super Set</fullName>
+                <default>false</default>
+                <label>CRM Analytics Super Set</label>
+            </value>
+            <value>
+                <fullName>CRM Analytics and Einstein Discovery Insights Specialist</fullName>
+                <default>false</default>
+                <label>CRM Analytics and Einstein Discovery Insights Specialist</label>
+            </value>
+            <value>
+                <fullName>Data Categorization and Access Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Data Categorization and Access Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Data Integration Specialist</fullName>
+                <default>false</default>
+                <label>Data Integration Specialist</label>
+            </value>
+            <value>
+                <fullName>Data Protection Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Data Protection Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Data Security Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>Data Security Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>Developer Super Set</fullName>
+                <default>false</default>
+                <label>Developer Super Set</label>
+            </value>
+            <value>
+                <fullName>Extended User Access and Restriction Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Extended User Access and Restriction Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Financial Services Cloud Specialist</fullName>
+                <default>false</default>
+                <label>Financial Services Cloud Specialist</label>
+            </value>
+            <value>
+                <fullName>Flow Administration Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Flow Administration Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Flow Elements and Resources Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>Flow Elements and Resources Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>Flow Fundamentals Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Flow Fundamentals Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Flow Optimization Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Flow Optimization Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Health Cloud Specialist</fullName>
+                <default>false</default>
+                <label>Health Cloud Specialist</label>
+            </value>
+            <value>
+                <fullName>Lightning Experience Reports &amp; Dashboards Specialist</fullName>
+                <default>false</default>
+                <label>Lightning Experience Reports &amp; Dashboards Specialist</label>
+            </value>
+            <value>
+                <fullName>Lightning Implementation Specialist</fullName>
+                <default>false</default>
+                <label>Lightning Implementation Specialist</label>
+            </value>
+            <value>
+                <fullName>Lightning Web Components Specialist</fullName>
+                <default>false</default>
+                <label>Lightning Web Components Specialist</label>
+            </value>
+            <value>
+                <fullName>Multi-Factor Authentication and Single Sign-On Settings Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Multi-Factor Authentication and Single Sign-On Settings Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Process Automation Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>Process Automation Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>Salesforce Security Advocate Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Salesforce Security Advocate Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Screen Flow Distribution Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Screen Flow Distribution Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Screen Flow Fundamentals Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Screen Flow Fundamentals Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Screen Flow Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>Screen Flow Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>Secure Application Lifecycle Management Superbadge Unit</fullName>
+                <default>false</default>
+                <label>Secure Application Lifecycle Management Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>Security Advocacy Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>Security Advocacy Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>Security Governance Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>Security Governance Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>Security Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>Security Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>Selling with Sales Cloud Specialist</fullName>
+                <default>false</default>
+                <label>Selling with Sales Cloud Specialist</label>
+            </value>
+            <value>
+                <fullName>Service Cloud Specialist</fullName>
+                <default>false</default>
+                <label>Service Cloud Specialist</label>
+            </value>
+            <value>
+                <fullName>User Access Fundamentals Superbadge Unit</fullName>
+                <default>false</default>
+                <label>User Access Fundamentals Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>User Access Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>User Access Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>User Access Troubleshooting Superbadge Unit</fullName>
+                <default>false</default>
+                <label>User Access Troubleshooting Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>User Authentication Settings Superbadge Unit</fullName>
+                <default>false</default>
+                <label>User Authentication Settings Superbadge Unit</label>
+            </value>
+            <value>
+                <fullName>User Authentication Specialist Superbadge</fullName>
+                <default>false</default>
+                <label>User Authentication Specialist Superbadge</label>
+            </value>
+            <value>
+                <fullName>User Authentication Troubleshooting Superbadge Unit</fullName>
+                <default>false</default>
+                <label>User Authentication Troubleshooting Superbadge Unit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>10</visibleLines>
+</CustomField>

@@ -20,10 +20,10 @@ here I used portfoliobanner Lwc Component to provide social media links and user
 PORTFOLIO USER DETAILS AND STATS:
 
 In oreder to show case the user personal details and stats , i used components namely
-portfolioUserStatsWrapper
-portfolioUserDetails
+portfolioUserStatsWrapper,
+portfolioUserDetails,
 portfoiloUserStats
-and also used salesforce custom object naed 'Portfolio__c" to get the personal details . and user stats are providing using configuration public variables by declaring public(@api) variables in meta.xml file.
+and also used salesforce custom object naed 'Portfolio__c" to get the personal details . and user stats are providing using configurable public variables by declaring public(@api) variables in meta.xml file.
 
 PORTFOLIO SUMMARY TAB:
 

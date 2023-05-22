@@ -5,7 +5,7 @@ export default class CurrencyConverterApp extends LightningElement {
      currencyImage = `${currencyConverterAssets}/currencyConverterAssets/currency.svg`;
      countryList = countryCodeList;
      countryFrom = "USD";
-     countryTo = "AUD";
+     countryTo = "INR";
      conversionResult;
      conversionError;
      amount='';

@@ -14,6 +14,7 @@
             <property name="githubUrl" label =" Github URL"  type="String"></property>
             <property name="youtubeUrl" label =" Youtube URL"  type="String"></property>
             <property name="trailheadUrl" label =" Trailhead URL"  type="String"></property>
+            <property name="codepenUrl" label =" CodePen URL"  type="String"></property>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

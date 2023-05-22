@@ -34,6 +34,11 @@
                 <img src={socialMediaIcons.trailhead} alt="trailhead Icon" class="social-icon">
             </a>
         </template>
+        <template if:true={codepenUrl}>
+            <a href={codepenUrl} target="_blank">
+                <img src={socialMediaIcons.codepen} alt="CodePen Icon" class="social-icon">
+            </a>
+        </template>
         </div>
     </div>
 </template>

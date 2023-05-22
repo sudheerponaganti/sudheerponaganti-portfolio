@@ -13,7 +13,7 @@ export default class PortfolioBanner extends LightningElement {
     @api githubUrl  //  =  "https://github.com/sudheerponaganti"
     @api youtubeUrl  // =  "https://youtube.com"
     @api trailheadUrl // = "https://trailblazer.me/id/psudheer2"
-
+    @api codepenUrl  // = "https://codepen.io/sudheerponaganti"
    profileVideo =`${sudheerProfileVideo}/sudheerProfileVideo.mp4` 
     
     /*@api socialMediaUrls ={
@@ -59,7 +59,8 @@ export default class PortfolioBanner extends LightningElement {
         github      : `${PortfolioAssetsZip}/PortfolioAssets/Social/github.svg`,
         trailhead   : `${PortfolioAssetsZip}/PortfolioAssets/Social/trailhead1.svg`,
         twitter     : `${PortfolioAssetsZip}/PortfolioAssets/Social/twitter.svg`,
-        youtube     : `${PortfolioAssetsZip}/PortfolioAssets/Social/youtube.svg`
+        youtube     : `${PortfolioAssetsZip}/PortfolioAssets/Social/youtube.svg`,
+        codepen     : `${PortfolioAssetsZip}/PortfolioAssets/Social/codepen.svg`
     }
    
     @wire(getRecord, { recordId: '$recordId', fields: [FULLNAME_FIELD, DESIGNATION_FIELD,COMPANYNAME_FIELD,COMPANYLOCATION_FIELD] })

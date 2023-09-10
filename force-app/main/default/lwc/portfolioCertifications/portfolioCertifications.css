@@ -4,7 +4,7 @@ img{
 }
 h2{
     padding: 8px 16px;
-    background: #242c37;
+    background: black;
     font-weight: bold;
     font-size: 20px;
     color:  #fff;
@@ -12,7 +12,7 @@ h2{
 }
 
 .cert-box{
-    background: #ffdf7b;
+    background: #f3ca20;
     font-size: 20px;
     padding: 12px;
     border-radius: 5px;

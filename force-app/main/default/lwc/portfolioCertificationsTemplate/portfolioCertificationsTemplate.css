@@ -1,7 +1,9 @@
 .cert-template-box{
         cursor:pointer;
-        background: #ffdf7b;
-        color : #242c37;
+        /* background: #ffdf7b; */
+        background: #f3ca20;
+        /* color : #242c37; */
+        color:black;
         font-size: 20px;
         font-weight: bold;
         padding: 12px;
@@ -23,7 +25,7 @@
     }
 
     img{
-        background:#242c37;
+        background: black;
         padding:10px;
         border-radius:45px;
     }

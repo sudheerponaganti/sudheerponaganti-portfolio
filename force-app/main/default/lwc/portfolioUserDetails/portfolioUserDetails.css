@@ -3,3 +3,16 @@
         text-align:center;
     }
 }
+
+.custom-button{ 
+    --sds-c-button-neutral-color-background-active: #f3ca20;
+    --sds-c-button-neutral-color-background:#f3ca20;
+    --sds-c-button-neutral-color-background-hover : black;
+    --sds-c-button-text-color:  black;
+    --sds-c-button-text-color-hover: white;
+    --sds-c-button-neutral-color-border: white;
+    --sds-c-button-neutral-color-border-hover: white;
+    --sds-c-button-radius-border : 2rem;
+    --sds-c-button-spacing-block-start : 12px;
+    --sds-c-button-spacing-block-end : 12px;
+}

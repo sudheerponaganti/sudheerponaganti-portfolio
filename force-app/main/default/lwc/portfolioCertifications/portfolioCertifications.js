@@ -1,6 +1,7 @@
 import { LightningElement,wire,api} from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import PortfolioAssets from '@salesforce/resourceUrl/PortfolioAssets';
+import AudioClickSoundsZip from '@salesforce/resourceUrl/AudioClickSoundsZip';
 import SF_CERT_FIELD from '@salesforce/schema/Portfolio__c.SalesforceCertifications__c';
 import OTHER_CERT_FIELD from '@salesforce/schema/Portfolio__c.OtherCertifications__c';
 export default class PortfolioCertifications extends LightningElement {
@@ -24,12 +25,15 @@ export default class PortfolioCertifications extends LightningElement {
     formatCertifications(data){
         const{SalesforceCertifications__c,OtherCertifications__c} = data.fields
         this.sfCertificationList =SalesforceCertifications__c ?  SalesforceCertifications__c.value.split(";").map((item)=>{
-            return `Salesforce Certified ${item}`
+            return { "certificateName": `Salesforce Certified ${item}`, "certificateLogo":  `${PortfolioAssets}/PortfolioAssets/Salesforce Certified ${item}.png`} 
         }) : []
         this.otherCertificationList = OtherCertifications__c ?  OtherCertifications__c.value.split(","): [];
     }
 
     openCertificateHandler(event){
+        const audio = new Audio();
+        audio.src  = `${AudioClickSoundsZip}/audio-click-sounds/modern-click-box-sound.wav`;
+        audio.play();
         this.certName= event.currentTarget.dataset.name
         console.log(event.currentTarget.dataset.name)
         this.isCertificateOpen = true;
@@ -37,6 +41,9 @@ export default class PortfolioCertifications extends LightningElement {
     }
 
     backHandler(event){
+        const audio = new Audio();
+        audio.src  = `${AudioClickSoundsZip}/audio-click-sounds/video-game-mystery-sound.wav`;
+        audio.play();
         this.isCertificateOpen = event.detail
     }
 

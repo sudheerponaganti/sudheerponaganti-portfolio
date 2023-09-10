@@ -5,9 +5,9 @@
 <Lightning-layout multiple-rows>
     <template for:each={sfCertificationList} for:item="sfCertItem">
         <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small" key={sfCertItem}>
-            <div class="cert-box" data-name={sfCertItem} onclick={openCertificateHandler}>
-                <img src={certLogo} alt="Cert" >
-                <span>{sfCertItem}</span>
+            <div class="cert-box" data-name={sfCertItem.certificateName} onclick={openCertificateHandler}>
+                <img src={sfCertItem.certificateLogo} alt="Certificate Logo" >
+                <span>{sfCertItem.certificateName}</span>
             </div>
         </lightning-layout-item>
     </template>

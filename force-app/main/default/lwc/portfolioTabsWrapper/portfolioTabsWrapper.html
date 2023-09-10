@@ -1,7 +1,7 @@
 <template>
     <div class="tabs-wrapper show-tabs-on-desktop-view">
 
-        <lightning-tabset variant="scoped">
+        <lightning-tabset variant="scoped" onclick={buttonClickHandler}>
             <lightning-tab label="Summary">
                 <template if:true={recordId}>
                <c-portfolio-summary record-id={recordId} object-api-name={objectApiName}></c-portfolio-summary>
@@ -41,8 +41,8 @@
     </div>
 
     <div class="accordion-wrapper show-accordion-on-mobile-view">
-        <lightning-accordion allow-multiple-sections-open>
-        <lightning-accordion-section name="Summary" label="Summary">
+        <lightning-accordion allow-multiple-sections-open onclick={buttonClickHandler}>
+        <lightning-accordion-section name="Summary" label="Summary" >
             <template if:true={recordId}>
                 <c-portfolio-summary record-id={recordId} object-api-name={objectApiName}></c-portfolio-summary>
              </template>

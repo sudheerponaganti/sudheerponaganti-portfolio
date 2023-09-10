@@ -1,5 +1,6 @@
 import { LightningElement ,wire,api,track} from 'lwc';
 import { getRelatedListRecords} from 'lightning/uiRelatedListApi';
+import CompanyLogosZip from '@salesforce/resourceUrl/CompanyLogosZip';
 export default class PortfolioWorkExperience extends LightningElement {
 
     @track workExperienceList=[];
@@ -36,8 +37,8 @@ export default class PortfolioWorkExperience extends LightningElement {
            let JobDescription = this.getValue(JobDescription__c);
            let IsCurrent = this.getValue(IsCurrent__c);
            let Role = this.getValue(Role__c);
-           
-        return {id,apiName,JobStartDate,JobEndDate,companyName,WorkLocation,JobDescription,IsCurrent,Role,isTimelineOpen : true}
+           let companyLogo = `${CompanyLogosZip}/CompanyLogos/${companyName}-svg-logo.svg`;
+        return {id,apiName,JobStartDate,JobEndDate,companyName,WorkLocation,JobDescription,IsCurrent,Role,isTimelineOpen : true,companyLogo}
         })
         // console.log('workExperienceList is ==>', JSON.parse(JSON.stringify(this.workExperienceList)))
     }

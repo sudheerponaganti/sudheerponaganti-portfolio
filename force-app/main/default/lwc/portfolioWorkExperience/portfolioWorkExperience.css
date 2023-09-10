@@ -9,3 +9,8 @@
 .slds-timeline__item_task article{
     transition-duration: .25s;
 }
+.company-logo{
+    height: 40px;
+    width: 200px;
+    margin-left:-40px;
+}

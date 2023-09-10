@@ -1,5 +1,6 @@
 import { LightningElement } from 'lwc';
 import PortfolioAssets from '@salesforce/resourceUrl/PortfolioAssets'
+import AudioClickSoundsZip from '@salesforce/resourceUrl/AudioClickSoundsZip';
 export default class PortfolioPersonalProjects extends LightningElement {
     BMICalculator = `${PortfolioAssets}/PortfolioAssets/Projects/BMICalculator.png`
     AlarmClock = `${PortfolioAssets}/PortfolioAssets/Projects/AlarmClock.png`
@@ -39,6 +40,12 @@ export default class PortfolioPersonalProjects extends LightningElement {
              "img":this.NoteTakingApp,
              "link":"https://ponaganti-sudheer-dev-ed.trailblaze.my.site.com/note-taking-app"
         }
-    ]
+    ];
+
+    buttonSoundHandler(){
+        const audio = new Audio();
+        audio.src  = `${AudioClickSoundsZip}/audio-click-sounds/interface-sound.mp3`;
+        audio.play();
+    }
 
 }

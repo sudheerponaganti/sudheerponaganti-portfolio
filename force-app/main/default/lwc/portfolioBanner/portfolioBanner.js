@@ -1,6 +1,7 @@
 import { LightningElement,wire,api} from 'lwc';
 import PortfolioAssetsZip from '@salesforce/resourceUrl/PortfolioAssets';
 import sudheerProfileVideo from '@salesforce/resourceUrl/sudheerProfileVideo'
+import AudioClickSoundsZip from '@salesforce/resourceUrl/AudioClickSoundsZip';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import FULLNAME_FIELD from '@salesforce/schema/Portfolio__c.FullName__c';
 import DESIGNATION_FIELD from '@salesforce/schema/Portfolio__c.Designation__c';
@@ -24,32 +25,32 @@ export default class PortfolioBanner extends LightningElement {
         trailheadUrl : "https://trailblazer.me/id/psudheer2"
     } */
    connectedCallback(){
-    setTimeout(()=>{
-        const videoContainer = this.template.querySelector(".video-container");
-        const videoContainerImg  = this.template.querySelector(".video-container Img");
-        const videoContainerVideo = this.template.querySelector(".video-container video");
-        videoContainer.addEventListener("mouseover",()=>{
-             videoContainerImg.style.display = "none";
-             videoContainerVideo.style.display ="inline-block";
-             videoContainerVideo.play();
-        })
-        videoContainer.addEventListener("mouseleave",()=>{
-            videoContainerVideo.pause();
-            videoContainerVideo.style.display ="none";
-             videoContainerImg.style.display = "inline-block";
+//     setTimeout(()=>{
+//         const videoContainer = this.template.querySelector(".video-container");
+//         const videoContainerImg  = this.template.querySelector(".video-container Img");
+//         const videoContainerVideo = this.template.querySelector(".video-container video");
+//         videoContainer.addEventListener("mouseover",()=>{
+//              videoContainerImg.style.display = "none";
+//              videoContainerVideo.style.display ="inline-block";
+//              videoContainerVideo.play();
+//         })
+//         videoContainer.addEventListener("mouseleave",()=>{
+//             videoContainerVideo.pause();
+//             videoContainerVideo.style.display ="none";
+//              videoContainerImg.style.display = "inline-block";
              
-        })
+//         })
        
 
 
-        // const video = this.template.querySelector(".video-class");
-        // video.addEventListener("mouseover", ()=>{
-        //     video.play();
-        // })
-        // video.addEventListener("mouseleave", ()=>{
-        //     video.pause();
-        // })
-},0)
+//         // const video = this.template.querySelector(".video-class");
+//         // video.addEventListener("mouseover", ()=>{
+//         //     video.play();
+//         // })
+//         // video.addEventListener("mouseleave", ()=>{
+//         //     video.pause();
+//         // })
+// },0)
      
     }
     socialMediaIcons ={
@@ -95,5 +96,11 @@ export default class PortfolioBanner extends LightningElement {
     // videoHandler(event){
     // event.target.pause();
     // }
+
+    buttonSoundHandler(){
+        const audio = new Audio();
+        audio.src  = `${AudioClickSoundsZip}/audio-click-sounds/game-sound.mp3`;
+        audio.play();
+    }
 
 }

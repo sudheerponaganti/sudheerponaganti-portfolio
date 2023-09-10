@@ -65,4 +65,4 @@ export default class CurrencyConverterApp extends LightningElement {
 
       }
 
-} 
+}

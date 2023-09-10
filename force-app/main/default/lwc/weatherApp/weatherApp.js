@@ -122,4 +122,4 @@ export default class WeatherApp extends LightningElement {
       }
 
     }
-} 
+}

@@ -11,6 +11,8 @@ jsDev1CertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/jsDev1Cert.jpg`
 platformAppBuilderCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/platformAppBuilderCert.jpg`
 fscApCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/fscApCert.jpg`
 aplusCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/aPlusCert.jpg`
+copadoFunda1Img = `${PortfolioAssets}/PortfolioAssets/Certificates/copadoFunda1.jpg`
+
 
 @api
 get certName(){
@@ -42,6 +44,9 @@ set certName(data){
         case 'Capgemini A-Plus Certified Professional':
             this.certImg = this.aplusCertImg
              break;
+        case 'Copado Certified Fundamentals 1':
+        this.certImg = this.copadoFunda1Img
+            break;
         default:
           // code block
       }

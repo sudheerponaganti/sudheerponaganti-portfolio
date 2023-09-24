@@ -55,7 +55,7 @@ export default class PortfolioWorkExperience extends LightningElement {
         //     }
         // })
     this.template.querySelector(`div[data-index="${id}"]`).classList.toggle("slds-is-open")
-    this.template.querySelector(`button[data-id="${id}"]`).classList.toggle("de-active")   
+    this.template.querySelector(`button[data-id="${id}"]`).classList.toggle("de-active")
      }
 
 }

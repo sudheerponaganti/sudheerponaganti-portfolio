@@ -61,7 +61,8 @@ export default class PortfolioBanner extends LightningElement {
         trailhead   : `${PortfolioAssetsZip}/PortfolioAssets/Social/trailhead1.svg`,
         twitter     : `${PortfolioAssetsZip}/PortfolioAssets/Social/twitter.svg`,
         youtube     : `${PortfolioAssetsZip}/PortfolioAssets/Social/youtube.svg`,
-        codepen     : `${PortfolioAssetsZip}/PortfolioAssets/Social/codepen.svg`
+        codepen     : `${PortfolioAssetsZip}/PortfolioAssets/Social/codepen.svg`,
+        xTwitter   :  `${PortfolioAssetsZip}/PortfolioAssets/Social/x-twitter.svg`
     }
    
     @wire(getRecord, { recordId: '$recordId', fields: [FULLNAME_FIELD, DESIGNATION_FIELD,COMPANYNAME_FIELD,COMPANYLOCATION_FIELD] })

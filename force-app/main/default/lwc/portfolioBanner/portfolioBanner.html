@@ -10,32 +10,32 @@
         <div class="location">{companyLocation}</div>
         <div>
            <template if:true={linkedinUrl}>
-            <a href={linkedinUrl} target="_blank" onclick={buttonSoundHandler}>
+            <a href={linkedinUrl} target="_blank" onclick={buttonSoundHandler} title="LinkedIn">
                 <img src={socialMediaIcons.linkedin} alt="Linkedin Icon" class="social-icon">
             </a>
         </template>
             <template if:true={twitterUrl}>
-            <a href={twitterUrl} target="_blank" onclick={buttonSoundHandler}>
-                <img src={socialMediaIcons.twitter} alt="twitter Icon" class="social-icon">
+            <a href={twitterUrl} target="_blank" onclick={buttonSoundHandler} title="x/twitter">
+                <img src={socialMediaIcons.xTwitter} alt="x-twitter Icon" class="social-icon">
             </a>
         </template>
             <template if:true={githubUrl}>
-            <a href={githubUrl} target="_blank" onclick={buttonSoundHandler}>
+            <a href={githubUrl} target="_blank" onclick={buttonSoundHandler} title="github">
                 <img src={socialMediaIcons.github} alt="github Icon" class="social-icon">
             </a>
         </template>
             <template if:true={youtubeUrl}>
-            <a href={youtubeUrl} target="_blank" onclick={buttonSoundHandler}>
+            <a href={youtubeUrl} target="_blank" onclick={buttonSoundHandler} title="youtube">
                 <img src={socialMediaIcons.youtube} alt="youtube Icon" class="social-icon">
             </a>
         </template>
             <template if:true={trailheadUrl}>
-            <a href={trailheadUrl} target="_blank" onclick={buttonSoundHandler}>
+            <a href={trailheadUrl} target="_blank" onclick={buttonSoundHandler} title="trailhead">
                 <img src={socialMediaIcons.trailhead} alt="trailhead Icon" class="social-icon">
             </a>
         </template>
         <template if:true={codepenUrl}>
-            <a href={codepenUrl} target="_blank" onclick={buttonSoundHandler}>
+            <a href={codepenUrl} target="_blank" onclick={buttonSoundHandler} title="codepen">
                 <img src={socialMediaIcons.codepen} alt="CodePen Icon" class="social-icon">
             </a>
         </template>

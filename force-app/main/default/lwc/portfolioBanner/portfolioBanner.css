@@ -1,41 +1,43 @@
-.banner{
-    /* background: linear-gradient(0deg, #FF9800, #e84b0a); */
-    background: #f3ca20;
+.banner {
+    background: linear-gradient(45deg, #007aff 0%, #007aff 25%, #ffd140 25%, #ffd140 50%, #ffd140 50%, #ffd140 75%, #007aff 75%, #007aff 100%);
     min-height: 300px;
     text-align: center;
     padding: 32px 16px;
 }
 
-.profile-pic{
+.profile-pic {
     border-radius: 50%;
     width: 160px;
-    height: 160px; 
+    height: 160px;
 }
 
-.name{
-    font-size:32px;
-    font-weight:700;
+.name {
+    font-size: 32px;
+    font-weight: 700;
 }
-.designation, .location{
-    font-size:24px;
+
+.designation,
+.location {
+    font-size: 24px;
 }
-.social-icon{
+
+.social-icon {
     width: 40px;
     height: 40px;
     margin: 16px 16px 0px 0px;
 }
 
-.video-container{
-    display:inline-block;
+.video-container {
+    display: inline-block;
     border-radius: 50%;
     width: 160px;
-    height: 160px; 
+    height: 160px;
     object-fit: cover;
 }
 
-.video-class{
+.video-class {
     border-radius: 50%;
     width: 160px;
-    height: 160px; 
+    height: 160px;
     object-fit: cover;
 }

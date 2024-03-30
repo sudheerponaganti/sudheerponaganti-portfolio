@@ -7,7 +7,7 @@
                <c-portfolio-summary record-id={recordId} object-api-name={objectApiName}></c-portfolio-summary>
             </template>
             </lightning-tab>
-            <lightning-tab label="Work Experience">
+            <lightning-tab label="Work Experience" class="work-experience" >
                 <template if:true={recordId}>
                <c-portfolio-work-experience record-id={recordId}></c-portfolio-work-experience>
                 </template>
@@ -48,7 +48,7 @@
              </template>
         </lightning-accordion-section>
 
-        <lightning-accordion-section name="Work Experience" label="Work Experience">
+        <lightning-accordion-section name="Work Experience" label="Work Experience" class="work-experience">
             <template if:true={recordId}>
                 <c-portfolio-work-experience record-id={recordId}></c-portfolio-work-experience>
                  </template>

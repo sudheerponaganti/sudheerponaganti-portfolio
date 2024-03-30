@@ -12,6 +12,7 @@ platformAppBuilderCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/pla
 fscApCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/fscApCert.jpg`
 aplusCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/aPlusCert.jpg`
 copadoFunda1Img = `${PortfolioAssets}/PortfolioAssets/Certificates/copadoFunda1.jpg`
+aiAssociateCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/aiAssociateCert.jpg`
 
 
 @api
@@ -46,6 +47,9 @@ set certName(data){
              break;
         case 'Copado Certified Fundamentals 1':
         this.certImg = this.copadoFunda1Img
+            break;
+        case 'Salesforce Certified AI Associate':
+        this.certImg = this.aiAssociateCertImg
             break;
         default:
           // code block

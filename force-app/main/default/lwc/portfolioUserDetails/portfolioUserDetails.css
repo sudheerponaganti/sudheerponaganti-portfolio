@@ -5,10 +5,10 @@
 }
 
 .custom-button{ 
-    --sds-c-button-neutral-color-background-active: #f3ca20;
-    --sds-c-button-neutral-color-background:#f3ca20;
-    --sds-c-button-neutral-color-background-hover : black;
-    --sds-c-button-text-color:  black;
+    --sds-c-button-neutral-color-background-active: #ffd140;
+    --sds-c-button-neutral-color-background:#ffd140;
+    --sds-c-button-neutral-color-background-hover : #003087;
+    --sds-c-button-text-color:  #003087;
     --sds-c-button-text-color-hover: white;
     --sds-c-button-neutral-color-border: white;
     --sds-c-button-neutral-color-border-hover: white;

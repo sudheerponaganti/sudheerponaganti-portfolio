@@ -4,7 +4,7 @@ img{
 }
 h2{
     padding: 8px 16px;
-    background: black;
+    background: #003087;
     font-weight: bold;
     font-size: 20px;
     color:  #fff;
@@ -12,7 +12,7 @@ h2{
 }
 
 .cert-box{
-    background: #f3ca20;
+    background: #ffd140;
     font-size: 20px;
     padding: 12px;
     border-radius: 5px;
@@ -21,8 +21,9 @@ h2{
     justify-content: space-between;
 }
 .cert-box:hover{
-    background:#d8d8d8;
+    background:#007aff;
     cursor:pointer;
+    color:#fff;
 }
 
 .classic-theme{

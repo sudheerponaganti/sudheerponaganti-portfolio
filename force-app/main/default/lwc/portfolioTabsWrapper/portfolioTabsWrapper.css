@@ -1,7 +1,9 @@
 .accordian-wrapper{
     background:#fff;
 }
-
+lightning-tab.work-experience,lightning-accordion-section.work-experience{
+    background :linear-gradient(115deg, #ffd140 0%, #ffd140 50%, #007aff 50%, #007aff 100%);
+}
 .show-tabs-on-desktop-view{
     display:block;
 }

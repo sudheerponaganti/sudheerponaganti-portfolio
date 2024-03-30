@@ -1,3 +1,17 @@
+.slds-timeline__trigger:hover{
+ background-color:  #003087;
+}
+.slds-timeline__trigger{
+    padding : 10px;
+    background-color: #003087;
+    color: #fff;
+    border-radius: 5px;
+}
+.slds-timeline__date{
+    color : #fff;
+    font-weight : bold;
+}
+
 .slds-button_icon .chevron-down{
     transition-duration: .25s;
 }
@@ -10,6 +24,7 @@
     transition-duration: .25s;
 }
 .company-logo{
+    margin-top : 5px;
     height: 40px;
     width: 200px;
     margin-left:-40px;

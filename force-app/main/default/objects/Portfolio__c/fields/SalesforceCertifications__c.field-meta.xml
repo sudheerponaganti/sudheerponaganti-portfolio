@@ -185,6 +185,11 @@
                 <default>false</default>
                 <label>Strategy Designer</label>
             </value>
+            <value>
+                <fullName>AI Associate</fullName>
+                <default>false</default>
+                <label>AI Associate</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>10</visibleLines>

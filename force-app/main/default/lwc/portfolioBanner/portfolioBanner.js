@@ -15,7 +15,7 @@ export default class PortfolioBanner extends LightningElement {
     @api youtubeUrl  // =  "https://youtube.com"
     @api trailheadUrl // = "https://trailblazer.me/id/psudheer2"
     @api codepenUrl  // = "https://codepen.io/sudheerponaganti"
-   profileVideo =`${sudheerProfileVideo}/sudheerProfileVideo.mp4` 
+   profileVideo =`${sudheerProfileVideo}/sudheerProfileVideo.mp4`
     
     /*@api socialMediaUrls ={
         linkedinUrl  : "https://www.linkedin.com/in/ponaganti-sudheer-aa142a182/",
@@ -54,7 +54,7 @@ export default class PortfolioBanner extends LightningElement {
      
     }
     socialMediaIcons ={
-        sudheerPic  :  `${PortfolioAssetsZip}/PortfolioAssets/sudheerPonagantiPic.jpg`,
+        // sudheerPic  :  `${PortfolioAssetsZip}/PortfolioAssets/sudheerPonagantiPic.jpg`,
         userPic     : `${PortfolioAssetsZip}/PortfolioAssets/userPic.jpeg`,
         linkedin    : `${PortfolioAssetsZip}/PortfolioAssets/Social/linkedin.svg`,
         github      : `${PortfolioAssetsZip}/PortfolioAssets/Social/github.svg`,

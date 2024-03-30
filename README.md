@@ -41,7 +41,7 @@ I am using "portfolioWorkExperience', "portfolioSkills" componets to get data fr
 
 EDUCATION TAB:
 
-using "portfolioEducation" component to get from "Education__c" object
+using "portfolioEducation" component to get details from "Education__c" object
 
 ![image](https://user-images.githubusercontent.com/85873651/236638231-dd490ac4-06da-4940-a929-048221defa29.png)
 

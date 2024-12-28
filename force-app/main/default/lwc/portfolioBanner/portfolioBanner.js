@@ -54,7 +54,7 @@ export default class PortfolioBanner extends LightningElement {
      
     }
     socialMediaIcons ={
-        // sudheerPic  :  `${PortfolioAssetsZip}/PortfolioAssets/sudheerPonagantiPic.jpg`,
+        sudheerPic  :  `${PortfolioAssetsZip}/PortfolioAssets/sudheerProfile.jpg`,
         userPic     : `${PortfolioAssetsZip}/PortfolioAssets/userPic.jpeg`,
         linkedin    : `${PortfolioAssetsZip}/PortfolioAssets/Social/linkedin.svg`,
         github      : `${PortfolioAssetsZip}/PortfolioAssets/Social/github.svg`,

@@ -1,43 +1,63 @@
 .banner {
-    background: linear-gradient(45deg, #007aff 0%, #007aff 25%, #ffd140 25%, #ffd140 50%, #ffd140 50%, #ffd140 75%, #007aff 75%, #007aff 100%);
-    min-height: 300px;
-    text-align: center;
-    padding: 32px 16px;
+  background-color:#008cff;
+  text-align: center;
+  position: relative;
+  padding: 50px;
+  color:white;
+}
+
+.banner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://www.transparenttextures.com/patterns/white-leather.png");
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
 }
 
 .profile-pic {
-    border-radius: 50%;
-    width: 160px;
-    height: 160px;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
 }
 
 .name {
-    font-size: 32px;
-    font-weight: 700;
+  font-size: 32px;
+  font-weight: 700;
 }
 
 .designation,
 .location {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 .social-icon {
-    width: 40px;
-    height: 40px;
-    margin: 16px 16px 0px 0px;
+  width: 40px;
+  height: 40px;
+  margin: 16px 16px 0px 0px;
 }
-
+.trailhead-url{
+  transform: scale(1.5) translateY(5px);
+}
 .video-container {
-    display: inline-block;
-    border-radius: 50%;
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
+  display: inline-block;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
 }
 
 .video-class {
-    border-radius: 50%;
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
 }

@@ -12,10 +12,10 @@
                <c-portfolio-work-experience record-id={recordId}></c-portfolio-work-experience>
                 </template>
             </lightning-tab>
-            <lightning-tab label="Personal Projects">
+            <lightning-tab label="Personal Projects" class="personal-projects">
                 <c-portfolio-personal-projects></c-portfolio-personal-projects>
             </lightning-tab>
-            <lightning-tab label="Skills">
+            <lightning-tab label="Skills" class="skills">
                 <template if:true={recordId}>
                <c-portfolio-skills record-id={recordId}></c-portfolio-skills>
             </template>
@@ -54,7 +54,7 @@
                  </template>
         </lightning-accordion-section>
 
-        <lightning-accordion-section name="Personal Projects" label="Personal Projects">
+        <lightning-accordion-section name="Personal Projects" label="Personal Projects" class="personal-projects">
             <c-portfolio-personal-projects></c-portfolio-personal-projects>
         </lightning-accordion-section>
 

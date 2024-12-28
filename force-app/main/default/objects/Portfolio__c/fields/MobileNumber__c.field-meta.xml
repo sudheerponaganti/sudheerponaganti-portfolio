@@ -3,7 +3,7 @@
     <fullName>MobileNumber__c</fullName>
     <externalId>false</externalId>
     <label>Mobile Number</label>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Phone</type>
 </CustomField>

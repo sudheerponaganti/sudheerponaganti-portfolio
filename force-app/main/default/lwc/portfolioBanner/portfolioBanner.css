@@ -1,12 +1,12 @@
 .banner {
-  background-color:#008cff;
+  background-color:#60a3d9;
   text-align: center;
   position: relative;
   padding: 50px;
   color:white;
 }
 
-.banner::after {
+/* .banner::after {
   content: "";
   position: absolute;
   top: 0;
@@ -16,7 +16,7 @@
   background-image: url("https://www.transparenttextures.com/patterns/white-leather.png");
   opacity: 0.5;
   z-index: 1;
-}
+} */
 
 .banner-content {
   position: relative;

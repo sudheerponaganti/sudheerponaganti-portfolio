@@ -4,7 +4,7 @@ img{
 }
 h2{
     padding: 8px 16px;
-    background: #003087;
+    background: #003b73;
     font-weight: bold;
     font-size: 20px;
     color:  #fff;
@@ -12,7 +12,8 @@ h2{
 }
 
 .other-box{
-    background: #ffd140;
+    background: #189ab4;
+    color:white;
     font-size: 20px;
     padding: 12px;
     border-radius: 5px;
@@ -21,7 +22,7 @@ h2{
     justify-content: space-between;
 }
 .other-box:hover{
-    background:#007aff;
+    background:#0074b7;
     cursor:pointer;
     color : #fff;
 }

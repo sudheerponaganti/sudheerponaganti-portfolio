@@ -1,9 +1,9 @@
 .slds-timeline__trigger:hover{
- background-color:  #003087;
+ background-color:  #003b73;
 }
 .slds-timeline__trigger{
     padding : 10px;
-    background-color: #003087;
+    background-color: #003b73;
     color: #fff;
     border-radius: 5px;
 }
@@ -28,4 +28,8 @@
     height: 40px;
     width: 200px;
     margin-left:-40px;
+}
+
+article.slds-timeline__item_details{
+    overflow:auto;
 }

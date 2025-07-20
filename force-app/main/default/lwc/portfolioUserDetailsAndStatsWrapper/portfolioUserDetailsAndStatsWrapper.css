@@ -1,10 +1,10 @@
 .user-details-stats-wrapper{
     /* background-color: #003087; */
-    background-color:#002991;
+    background-color:#0074b7;
     position: relative;
     /* text-align: center; */
 }
-.user-details-stats-wrapper::after{
+/* .user-details-stats-wrapper::after{
   content: "";
   position: absolute;
   top: 0;
@@ -14,7 +14,7 @@
   background-image: url("https://www.transparenttextures.com/patterns/white-leather.png");
   opacity: 0.5;
   z-index: 1;
-}
+} */
 .user-details-stats-wrapper-content{
   position: relative;
   z-index: 2;

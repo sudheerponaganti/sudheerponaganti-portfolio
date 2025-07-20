@@ -1,10 +1,10 @@
 .accordian-wrapper{
     background:#fff;
 }
-lightning-tab{
+/* lightning-tab{
     background-image: url(https://www.transparenttextures.com/patterns/white-leather.png);
-    /* background-color: #60cdff; */
-}
+    background-color: #60cdff;
+} */
 .show-tabs-on-desktop-view{
     display:block;
 }

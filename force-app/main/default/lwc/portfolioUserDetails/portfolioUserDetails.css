@@ -5,10 +5,10 @@
 }
 
 .custom-button{ 
-    --sds-c-button-neutral-color-background-active: #ffd140;
-    --sds-c-button-neutral-color-background:#ffd140;
+    --sds-c-button-neutral-color-background-active: #d4f1f4;
+    --sds-c-button-neutral-color-background:#d4f1f4;
     --sds-c-button-neutral-color-background-hover : transparent;
-    --sds-c-button-text-color:  #002991;
+    --sds-c-button-text-color:  #003b73;
     --sds-c-button-text-color-hover: white;
     --sds-c-button-neutral-color-border: white;
     --sds-c-button-neutral-color-border-hover: white;

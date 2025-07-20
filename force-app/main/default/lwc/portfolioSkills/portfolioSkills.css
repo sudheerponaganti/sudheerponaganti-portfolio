@@ -1,14 +1,14 @@
 .slds-badge{
-    --slds-c-badge-color-background: #ffd140;
+    --slds-c-badge-color-background: #189ab4;
     /* --slds-c-badge-color-border :  #f6c403; */
-    --slds-c-badge-text-color : black;
+    --slds-c-badge-text-color : white;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 h2{
     padding: 8px 16px;
-    background: #003087;
+    background: #003b73;
     font-weight: bold;
     font-size: 20px;
     color:  #fff;

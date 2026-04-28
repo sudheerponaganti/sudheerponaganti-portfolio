@@ -1,38 +1,58 @@
+<!-- sldsValidatorIgnore -->
 <template>
 
-    <h2 class="slds-var-m-bottom_medium">Awards</h2> 
-    <Lightning-layout multiple-rows>
+    <!-- Awards -->
+    <div class="section-heading-wrap">
+        <div class="section-icon yellow-icon">
+            <lightning-icon icon-name="utility:ribbon" alternative-text="Awards" size="x-small"></lightning-icon>
+        </div>
+        <h2 class="section-heading">Awards</h2>
+    </div>
+    <lightning-layout multiple-rows>
         <template for:each={awardsList} for:item="award">
             <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small" key={award}>
-                <div class="other-box">
-                    <img src={trophyImg} alt="Cert" >
-                    <span>{award}</span>
+                <div class="other-box other-box--yellow">
+                    <img src={trophyImg} alt="Award" class="other-img">
+                    <span class="box-label">{award}</span>
                 </div>
             </lightning-layout-item>
         </template>
-    </Lightning-layout>
+    </lightning-layout>
 
-    <h2 class="slds-var-m-bottom_medium">Super Badges</h2> 
-    <Lightning-layout multiple-rows>
+    <!-- Super Badges -->
+    <div class="section-heading-wrap">
+        <div class="section-icon blue-icon">
+            <lightning-icon icon-name="utility:trailhead" alternative-text="Badges" size="x-small"></lightning-icon>
+        </div>
+        <h2 class="section-heading">Super Badges</h2>
+    </div>
+    <lightning-layout multiple-rows>
         <template for:each={superBadgesList} for:item="superBadge">
             <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small" key={superBadge}>
-                <div class="other-box">
-                    <img src={badgeImg} alt="Cert" >
-                    <span>{superBadge}</span>
+                <div class="other-box other-box--blue">
+                    <img src={badgeImg} alt="Super Badge" class="other-img">
+                    <span class="box-label">{superBadge}</span>
                 </div>
             </lightning-layout-item>
         </template>
-    </Lightning-layout>
+    </lightning-layout>
 
-    <h2 class="slds-var-m-bottom_medium">Languages</h2> 
-    <Lightning-layout multiple-rows>
+    <!-- Languages -->
+    <div class="section-heading-wrap">
+        <div class="section-icon teal-icon">
+            <lightning-icon icon-name="utility:world" alternative-text="Languages" size="x-small"></lightning-icon>
+        </div>
+        <h2 class="section-heading">Languages</h2>
+    </div>
+    <lightning-layout multiple-rows>
         <template for:each={languages} for:item="language">
             <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small" key={language}>
-                <div class="other-box">
-                    <img src={languageImg} alt="Cert" >
-                    <span>{language}</span>
+                <div class="other-box other-box--teal">
+                    <img src={languageImg} alt="Language" class="other-img">
+                    <span class="box-label">{language}</span>
                 </div>
             </lightning-layout-item>
         </template>
-    </Lightning-layout>
+    </lightning-layout>
+
 </template>

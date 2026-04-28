@@ -1,18 +1,63 @@
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioUserDetails.css
+   Apple Liquid Glass · HIG Dark Mode
+   ═══════════════════════════════════════════════════════════════════ */
+
+:host {
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+    --label-1: rgba(255, 255, 255, 1.00);
+    --label-2: rgba(235, 235, 245, 0.72);
+    --teal: #5ac8f5;
+
+    display: block;
+    padding: 8px 24px 16px;
+    font-family: var(--font-display);
+
+    /* Override SLDS output field text tokens at host level */
+    --slds-g-color-neutral-base-10:  rgba(255, 255, 255, 0.90);
+    --slds-g-color-neutral-base-30:  rgba(235, 235, 245, 0.72);
+    --slds-g-color-neutral-base-95:  transparent;
+    --slds-g-color-neutral-base-100: transparent;
+}
+
+/* ── Ensure the output field and its label are white ────────────── */
+lightning-record-view-form {
+    background: transparent !important;
+    color: var(--label-1);
+}
+
+/* Center the layout items so email is not pinned extreme left */
+lightning-layout {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 0;
+}
+
+/* Email output field — center text, white color */
+lightning-output-field {
+    color: var(--label-1) !important;
+    font-family: var(--font-display);
+    font-size: 15px;
+}
+
 @media (min-width:768px) and (max-width :1025px) {
     .resume-link{
-        text-align:center;  
+        text-align:center;
     }
 }
 
-.custom-button{ 
-    --sds-c-button-neutral-color-background-active: #d4f1f4;
-    --sds-c-button-neutral-color-background:#d4f1f4;
-    --sds-c-button-neutral-color-background-hover : transparent;
-    --sds-c-button-text-color:  #003b73;
-    --sds-c-button-text-color-hover: white;
-    --sds-c-button-neutral-color-border: white;
-    --sds-c-button-neutral-color-border-hover: white;
-    --sds-c-button-radius-border : 2rem;
-    --sds-c-button-spacing-block-start : 12px;
-    --sds-c-button-spacing-block-end : 12px;
+/* ── Download Resume button — glass style ───────────────────────── */
+.custom-button{
+    --sds-c-button-neutral-color-background-active: rgba(90, 200, 245, 0.20);
+    --sds-c-button-neutral-color-background: rgba(90, 200, 245, 0.12);
+    --sds-c-button-neutral-color-background-hover: rgba(90, 200, 245, 0.22);
+    --sds-c-button-text-color: rgba(255, 255, 255, 1.00);
+    --sds-c-button-text-color-hover: rgba(255, 255, 255, 1.00);
+    --sds-c-button-neutral-color-border: rgba(90, 200, 245, 0.40);
+    --sds-c-button-neutral-color-border-hover: rgba(90, 200, 245, 0.60);
+    --sds-c-button-radius-border: 2rem;
+    --sds-c-button-spacing-block-start: 12px;
+    --sds-c-button-spacing-block-end: 12px;
 }

@@ -1,20 +1,524 @@
-h3{
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-}
-p{
-    /* color: #FF9800; */
-    color: #d4f1f4;
-    font-size:32px;
-    font-weight:700;
-}
-img{
-    height: 100px;
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioUserStats.css
+   Apple Liquid Glass · HIG Dark Mode · SF Pro Display
+   Design tokens mirror portfolioBanner for visual consistency.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Design tokens ──────────────────────────────────────────────── */
+:host {
+    /* ── Canonical design tokens — mirrors portfolioBanner exactly ── */
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+
+    /* Apple HIG dark-mode system colours — full published set */
+    --blue:   #0a84ff;
+    --green:  #30d158;
+    --yellow: #ffd60a;
+    --orange: #ff9f0a;
+    --red:    #ff453a;
+    --indigo: #5e5ce6;
+    --purple: #bf5af2;
+    --teal:   #5ac8f5;
+    --mint:   #63e6e2;
+
+    /* Label hierarchy — Apple HIG dark-mode RGBA */
+    --label-1: rgba(255, 255, 255, 1.00);
+    --label-2: rgba(235, 235, 245, 0.60);
+    --label-3: rgba(235, 235, 245, 0.38);
+
+    /* ── Glass depth system (3 intentional levels) ──────────────────
+       Level 1 — Banner main card:  0.13 / blur(24px) / brightness(1.08)
+       Level 2 — Stat cards:        0.10 / blur(20px) / brightness(1.06)  ← this component
+       Level 3 — Tab bar / pills:   0.07 / blur(16px) / brightness(1.04)
+       Each level recedes one step — creates authentic depth hierarchy. */
+    --glass-2-bg:     rgba(255, 255, 255, 0.10);
+    --glass-2-blur:   blur(20px) saturate(180%) brightness(1.06);
+    --glass-2-border: rgba(255, 255, 255, 0.16);
+    --glass-2-hi-top: rgba(255, 255, 255, 0.50);
+
+    /* Specular / shadow system — same anchors as Banner */
+    --glass-hi-top:   rgba(255, 255, 255, 0.55);
+    --glass-hi-bot:   rgba(0,   0,   0,   0.12);
+    --glass-hi-left:  rgba(255, 255, 255, 0.18);
+    --glass-hi-right: rgba(255, 255, 255, 0.10);
+
+    /* Dynamic Type scale — full HIG set */
+    --t-large-title: 34px;
+    --t-title-1:     28px;
+    --t-subhead:     15px;
+    --t-footnote:    13px;
+
+    /* 4pt spacing grid */
+    --sp-1:  4px;
+    --sp-2:  8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+    --sp-8: 32px;
+
+    /* Easing */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@media (max-width:720px){
-    img{
-        margin-top:16px;
+/* ── Stats grid ─────────────────────────────────────────────────── */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-3);
+    width: 100%;
+    padding: var(--sp-5) var(--sp-6);
+    box-sizing: border-box;
+    font-family: var(--font-display);
+}
+
+/* ── Base glass card ─────────────────────────────────────────────── */
+.stat-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    padding: var(--sp-5) var(--sp-4);
+    min-height: 148px;
+    text-align: center;
+    border-radius: 20px;
+    overflow: hidden;
+
+    /* Glass material */
+    background: var(--glass-2-bg);
+    -webkit-backdrop-filter: var(--glass-2-blur);
+            backdrop-filter: var(--glass-2-blur);
+    border: 1px solid var(--glass-2-border);
+
+    /* Default 6-layer shadow — overridden per accent modifier */
+    box-shadow:
+        0  2px  8px  rgba(0, 0, 0, 0.20),
+        0  8px  28px rgba(0, 0, 0, 0.30),
+        0 20px  48px rgba(0, 0, 0, 0.18),
+        inset 0  1px 0 rgba(255, 255, 255, 0.50),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.12);
+
+    /* ── Scroll-triggered entrance ───────────────────────────────
+       Cards start invisible. JS adds .stat-card--visible via
+       IntersectionObserver when the card enters the viewport,
+       which triggers the entrance keyframe animation.
+       After animation ends, hover transition takes over. */
+    opacity: 0;
+
+    /* Hover transition — only active after entrance animation ends */
+    transition:
+        transform  0.28s var(--spring),
+        box-shadow 0.28s ease;
+
+    cursor: default;
+}
+
+/* ── Visible state — JS adds this class on scroll intersection ── */
+.stat-card--visible {
+    /* Entrance keyframe: opacity + translateY, staggered by --card-delay.
+       `forwards` fill keeps the card at opacity:1, transform:translateY(0)
+       after the animation ends — then hover transition takes over. */
+    animation: stat-card-enter 0.75s var(--ease-out) var(--card-delay, 0s) forwards;
+}
+
+@keyframes stat-card-enter {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ── Static specular sheen on ::before ──────────────────────────── */
+/* No sweep animation — the single page-level orb drift in
+   portfolioWrapper.css provides all ambient motion. */
+.stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+
+    background:
+        /* Static radial — upper-left light source */
+        radial-gradient(
+            ellipse 80% 60% at 20% 10%,
+            rgba(255, 255, 255, 0.07) 0%,
+            transparent 70%
+        );
+}
+
+/* ── Two refraction lines — top specular + bottom caustic ────────── */
+.stat-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+
+    background:
+        linear-gradient(rgba(255,255,255,0.50), rgba(255,255,255,0.50))
+            no-repeat 12px 0 / calc(100% - 24px) 1px,
+        linear-gradient(rgba(0,0,0,0.10), rgba(0,0,0,0.10))
+            no-repeat 12px 100% / calc(100% - 24px) 1px;
+}
+
+/* All children — position:relative z-index:1 to sit above ::before/::after.
+   NO transform in child animations — prevents composited-layer rectangles. */
+.stat-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Per-card entrance stagger delays ────────────────────────────── */
+.stat-card--rank   { --card-delay: 0.00s; }
+.stat-card--badges { --card-delay: 0.09s; }
+.stat-card--points { --card-delay: 0.18s; }
+.stat-card--trails { --card-delay: 0.27s; }
+
+/* ── Per-card accent top specular + outer glow ───────────────────── */
+.stat-card--rank {
+    box-shadow:
+        0  2px  8px  rgba(0, 0, 0, 0.20),
+        0  8px  28px rgba(0, 0, 0, 0.30),
+        0 20px  48px rgba(0, 0, 0, 0.18),
+        0 12px  36px rgba(90, 200, 245, 0.18),
+        inset 0  1px 0 rgba(90, 200, 245, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+.stat-card--badges {
+    box-shadow:
+        0  2px  8px  rgba(0, 0, 0, 0.20),
+        0  8px  28px rgba(0, 0, 0, 0.30),
+        0 20px  48px rgba(0, 0, 0, 0.18),
+        0 12px  36px rgba(255, 214, 10, 0.16),
+        inset 0  1px 0 rgba(255, 214, 10, 0.42),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+.stat-card--points {
+    box-shadow:
+        0  2px  8px  rgba(0, 0, 0, 0.20),
+        0  8px  28px rgba(0, 0, 0, 0.30),
+        0 20px  48px rgba(0, 0, 0, 0.18),
+        0 12px  36px rgba(48, 209, 88, 0.16),
+        inset 0  1px 0 rgba(48, 209, 88, 0.40),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+.stat-card--trails {
+    box-shadow:
+        0  2px  8px  rgba(0, 0, 0, 0.20),
+        0  8px  28px rgba(0, 0, 0, 0.30),
+        0 20px  48px rgba(0, 0, 0, 0.18),
+        0 12px  36px rgba(10, 132, 255, 0.18),
+        inset 0  1px 0 rgba(10, 132, 255, 0.42),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ── Hover — lift + intensified accent glow ─────────────────────── */
+.stat-card:hover {
+    transform: translateY(-6px) scale(1.035);
+}
+
+.stat-card--rank:hover {
+    box-shadow:
+        0  4px  16px rgba(0, 0, 0, 0.24),
+        0 16px  40px rgba(0, 0, 0, 0.32),
+        0 24px  56px rgba(0, 0, 0, 0.20),
+        0 16px  48px rgba(90, 200, 245, 0.32),
+        inset 0  1px 0 rgba(90, 200, 245, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.14);
+}
+.stat-card--badges:hover {
+    box-shadow:
+        0  4px  16px rgba(0, 0, 0, 0.24),
+        0 16px  40px rgba(0, 0, 0, 0.32),
+        0 24px  56px rgba(0, 0, 0, 0.20),
+        0 16px  48px rgba(255, 214, 10, 0.28),
+        inset 0  1px 0 rgba(255, 214, 10, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.14);
+}
+.stat-card--points:hover {
+    box-shadow:
+        0  4px  16px rgba(0, 0, 0, 0.24),
+        0 16px  40px rgba(0, 0, 0, 0.32),
+        0 24px  56px rgba(0, 0, 0, 0.20),
+        0 16px  48px rgba(48, 209, 88, 0.28),
+        inset 0  1px 0 rgba(48, 209, 88, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.14);
+}
+.stat-card--trails:hover {
+    box-shadow:
+        0  4px  16px rgba(0, 0, 0, 0.24),
+        0 16px  40px rgba(0, 0, 0, 0.32),
+        0 24px  56px rgba(0, 0, 0, 0.20),
+        0 16px  48px rgba(10, 132, 255, 0.30),
+        inset 0  1px 0 rgba(10, 132, 255, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+        inset  1px 0 0 rgba(255, 255, 255, 0.14);
+}
+
+/* ── Rank card — ring + image ────────────────────────────────────── */
+.rank-ring-wrapper {
+    position: relative;
+    width:  96px;
+    height: 96px;
+    border-radius: 50%;
+    padding: 3px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+
+    /* Conic gradient ring — Trailhead green → blue → teal → white */
+    background: conic-gradient(
+        from 200deg,
+        rgba(255, 255, 255, 0.85)   0deg,
+        rgba(0, 154,  68, 0.80)    80deg,
+        rgba(0, 164, 228, 0.70)   200deg,
+        rgba(90, 200, 245, 0.60)  280deg,
+        rgba(255, 255, 255, 0.85) 360deg
+    );
+
+    box-shadow:
+        0 0 20px rgba(0, 154, 68, 0.35),
+        0 0 44px rgba(0, 164, 228, 0.22),
+        0 8px 24px rgba(0, 0, 0, 0.40);
+
+    animation: rank-breathe 6s ease-in-out infinite alternate;
+}
+
+/* Dark inner fill — makes the rank image pop against the ring */
+.rank-ring-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: rgba(3, 3, 10, 0.70);
+    z-index: 0;
+}
+
+.rank-img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: contain;
+    padding: 6px;
+    box-sizing: border-box;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.50));
+}
+
+.rank-label {
+    font-size: var(--t-subhead);
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    color: var(--teal);
+    text-shadow: 0 0 14px rgba(90, 200, 245, 0.45);
+    text-transform: capitalize;
+}
+
+.stat-sub-label {
+    font-size: var(--t-footnote);
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    /* Raised from label-3 (0.38) to 0.70 — readable on dark card */
+    color: rgba(235, 235, 245, 0.70);
+    text-transform: uppercase;
+}
+
+/* ── Stat icon pill ──────────────────────────────────────────────── */
+.stat-icon-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    flex-shrink: 0;
+}
+
+.stat-icon-pill--badges {
+    background: rgba(255, 214, 10, 0.14);
+    border-color: rgba(255, 214, 10, 0.28);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.40),
+        0 0 14px rgba(255, 214, 10, 0.20);
+    color: var(--yellow);
+}
+
+.stat-icon-pill--points {
+    background: rgba(48, 209, 88, 0.13);
+    border-color: rgba(48, 209, 88, 0.26);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.40),
+        0 0 14px rgba(48, 209, 88, 0.18);
+    color: var(--green);
+}
+
+.stat-icon-pill--trails {
+    background: rgba(10, 132, 255, 0.14);
+    border-color: rgba(10, 132, 255, 0.28);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.40),
+        0 0 14px rgba(10, 132, 255, 0.20);
+    color: var(--blue);
+}
+
+.stat-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    /* Ensure currentColor propagates — guards against Salesforce base
+       stylesheets injecting fill:none on SVG elements */
+    fill: currentColor;
+    overflow: visible;
+}
+
+/* ── Stat number ─────────────────────────────────────────────────── */
+.stat-number {
+    margin: 0;
+    padding: 0;
+    font-size: var(--t-large-title);   /* 34px */
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    color: var(--label-1);
+    line-height: 1;
+
+    /* Tabular figures — prevents layout jitter during count-up animation */
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+
+}
+
+/* Drop one scale step for 5-digit numbers (10,000–99,999) */
+.stat-number--large {
+    font-size: var(--t-title-1);   /* 28px */
+    letter-spacing: -0.5px;
+}
+
+/* Drop two scale steps for 6+ digit numbers (100,000+) */
+.stat-number--xlarge {
+    font-size: 22px;
+    letter-spacing: -0.4px;
+}
+
+/* ── Stat label ──────────────────────────────────────────────────── */
+.stat-label {
+    font-size: var(--t-footnote);   /* 13px */
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    /* Raised from label-2 (0.60) to 0.82 — legible on dark glass */
+    color: rgba(235, 235, 245, 0.82);
+}
+
+/* ── Keyframes ───────────────────────────────────────────────────── */
+
+/* Ring breathing glow */
+@keyframes rank-breathe {
+    from {
+        box-shadow:
+            0 0 20px rgba(0, 154, 68, 0.35),
+            0 0 44px rgba(0, 164, 228, 0.22),
+            0 8px 24px rgba(0, 0, 0, 0.40);
+    }
+    to {
+        box-shadow:
+            0 0 28px rgba(0, 154, 68, 0.55),
+            0 0 56px rgba(0, 164, 228, 0.38),
+            0 8px 28px rgba(0, 0, 0, 0.45);
+    }
+}
+
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .stats-section {
+        grid-template-columns: 1fr 1fr;
+        padding: var(--sp-4);
+        gap: var(--sp-2);
+    }
+
+    .stat-number {
+        font-size: var(--t-title-1);   /* 28px */
+        letter-spacing: -0.5px;
+    }
+
+    .stat-number--large {
+        font-size: 22px;
+        letter-spacing: -0.4px;
+    }
+
+    .stat-number--xlarge {
+        font-size: 18px;
+        letter-spacing: -0.3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-section {
+        grid-template-columns: 1fr;
+        gap: var(--sp-2);
+        padding: var(--sp-3);
+    }
+
+    .stat-card {
+        min-height: 120px;
+        padding: var(--sp-4) var(--sp-3);
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    /* Show cards immediately — skip scroll entrance */
+    .stat-card {
+        opacity: 1 !important;
+    }
+
+    .stat-card--visible {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+    }
+
+    .rank-ring-wrapper,
+    .rank-label,
+    .stat-sub-label,
+    .stat-icon-pill,
+    .stat-number,
+    .stat-label {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+    }
+
+    .stat-card:hover {
+        transform: none;
+    }
+
+    .stat-card {
+        -webkit-backdrop-filter: blur(12px) saturate(140%);
+                backdrop-filter: blur(12px) saturate(140%);
     }
 }

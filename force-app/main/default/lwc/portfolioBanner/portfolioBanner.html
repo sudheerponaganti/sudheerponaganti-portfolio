@@ -1,46 +1,96 @@
 <!-- sldsValidatorIgnore -->
 <template>
     <div class="banner">
-        <div class="banner-content">
-        <div class="video-container">
-            <img src={socialMediaIcons.sudheerPic} alt="Profile Pic" class="profile-pic">
-            <!-- <video src={profileVideo} style="display:none;" alt="Profile Video" class="video-class"></video> -->
+
+        <!-- Central glass card — Liquid Glass panel -->
+        <div class="glass-card">
+
+            <!-- Profile avatar + breathing glow ring -->
+            <div class="avatar-ring">
+                <img src={socialMediaIcons.sudheerPic} alt="Profile" class="profile-pic">
+            </div>
+
+            <!-- Name -->
+            <h1 class="name">{fullName}</h1>
+
+            <!-- Role chip + company — separated for individual styling -->
+            <div class="role-row">
+                <span class="role-chip">{designation}</span>
+                <span class="role-at">at</span>
+                <span class="company-name">{companyName}</span>
+            </div>
+
+            <!-- Location with pin icon (inline SVG — no extra static resource) -->
+            <div class="location-row">
+                <svg class="pin-icon" viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"
+                          fill="currentColor"/>
+                </svg>
+                <span class="location-text">{companyLocation}</span>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider"></div>
+
+            <!-- Social icons row — each is its own glass pill -->
+            <div class="social-icons-row">
+
+                <template if:true={linkedinUrl}>
+                    <a href={linkedinUrl} target="_blank"
+                       title="LinkedIn"
+                       class="social-pill linkedin-icon"
+                       data-index="0">
+                        <img src={socialMediaIcons.linkedin} alt="LinkedIn" class="social-icon">
+                    </a>
+                </template>
+
+                <template if:true={twitterUrl}>
+                    <a href={twitterUrl} target="_blank"
+                       title="X / Twitter"
+                       class="social-pill twitter-icon"
+                       data-index="1">
+                        <img src={socialMediaIcons.xTwitter} alt="X" class="social-icon">
+                    </a>
+                </template>
+
+                <template if:true={githubUrl}>
+                    <a href={githubUrl} target="_blank"
+                       title="GitHub"
+                       class="social-pill github-icon"
+                       data-index="2">
+                        <img src={socialMediaIcons.github} alt="GitHub" class="social-icon">
+                    </a>
+                </template>
+
+                <template if:true={youtubeUrl}>
+                    <a href={youtubeUrl} target="_blank"
+                       title="YouTube"
+                       class="social-pill youtube-icon"
+                       data-index="3">
+                        <img src={socialMediaIcons.youtube} alt="YouTube" class="social-icon">
+                    </a>
+                </template>
+
+                <template if:true={trailheadUrl}>
+                    <a href={trailheadUrl} target="_blank"
+                       title="Trailhead"
+                       class="social-pill trailhead-icon"
+                       data-index="4">
+                        <img src={socialMediaIcons.trailhead} alt="Trailhead" class="social-icon">
+                    </a>
+                </template>
+
+                <template if:true={codepenUrl}>
+                    <a href={codepenUrl} target="_blank"
+                       title="CodePen"
+                       class="social-pill codepen-icon"
+                       data-index="5">
+                        <img src={socialMediaIcons.codepen} alt="CodePen" class="social-icon">
+                    </a>
+                </template>
+
+            </div>
         </div>
-        <div class="name"> {fullName}</div>
-        <div class="designation">{designation} at {companyName}</div>
-        <div class="location">{companyLocation}</div>
-        <div>
-            <template if:true={linkedinUrl}>
-                <a href={linkedinUrl} target="_blank" onclick={buttonSoundHandler} title="LinkedIn">
-                    <img src={socialMediaIcons.linkedin} alt="Linkedin Icon" class="social-icon">
-                </a>
-            </template>
-            <template if:true={twitterUrl}>
-                <a href={twitterUrl} target="_blank" onclick={buttonSoundHandler} title="x/twitter">
-                    <img src={socialMediaIcons.xTwitter} alt="x-twitter Icon" class="social-icon">
-                </a>
-            </template>
-            <template if:true={githubUrl}>
-                <a href={githubUrl} target="_blank" onclick={buttonSoundHandler} title="github">
-                    <img src={socialMediaIcons.github} alt="github Icon" class="social-icon">
-                </a>
-            </template>
-            <template if:true={youtubeUrl}>
-                <a href={youtubeUrl} target="_blank" onclick={buttonSoundHandler} title="youtube">
-                    <img src={socialMediaIcons.youtube} alt="youtube Icon" class="social-icon">
-                </a>
-            </template>
-            <template if:true={trailheadUrl}>
-                <a href={trailheadUrl} target="_blank" onclick={buttonSoundHandler} title="trailhead">
-                    <img src={socialMediaIcons.trailhead} alt="trailhead Icon" class="social-icon trailhead-url">
-                </a>
-            </template>
-            <template if:true={codepenUrl}>
-                <a href={codepenUrl} target="_blank" onclick={buttonSoundHandler} title="codepen">
-                    <img src={socialMediaIcons.codepen} alt="CodePen Icon" class="social-icon">
-                </a>
-            </template>
-        </div>
-    </div>
     </div>
 </template>

@@ -1,28 +1,250 @@
-img{
-    height:60px;
-    margin-right:16px;
-}
-h2{
-    padding: 8px 16px;
-    background: #003b73;
-    font-weight: bold;
-    font-size: 20px;
-    color:  #fff;
-    border-radius:5px;
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioOtherDetails.css  ·  Apple Liquid Glass Dark Mode
+   PNG logos shown with actual colors (drop-shadow only). Per-section accents.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:host {
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+    --yellow:  #ffd60a;
+    --blue:    #0a84ff;
+    --teal:    #5ac8f5;
+    --label-1: rgba(255, 255, 255, 1.00);
+    --label-2: rgba(235, 235, 245, 0.72);
+    --glass-bg:     rgba(255, 255, 255, 0.09);
+    --glass-blur:   blur(20px) saturate(180%) brightness(1.06);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Prevent lightning-layout grid rows from bleeding past container */
+    display: block;
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
-.other-box{
-    background: #189ab4;
-    color:white;
-    font-size: 20px;
-    padding: 12px;
-    border-radius: 5px;
+/* ── Section heading row ────────────────────────────────────────── */
+.section-heading-wrap {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 10px;
+    margin: 20px 16px 12px;
+    box-sizing: border-box;
+    max-width: 100%;
 }
-.other-box:hover{
-    background:#0074b7;
-    cursor:pointer;
-    color : #fff;
+
+.section-heading {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.0px;
+    text-transform: uppercase;
+    color: var(--label-1);
+    background: rgba(255, 255, 255, 0.10);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+            backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 20px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 4px 12px rgba(0, 0, 0, 0.20);
+}
+
+/* ── Section header icon dot ────────────────────────────────────── */
+.section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 9px;
+    width: 32px;
+    height: 32px;
+}
+
+.yellow-icon {
+    background: rgba(255, 214, 10, 0.16);
+    border: 1px solid rgba(255, 214, 10, 0.30);
+    box-shadow: 0 0 12px rgba(255, 214, 10, 0.14);
+}
+
+.blue-icon {
+    background: rgba(10, 132, 255, 0.16);
+    border: 1px solid rgba(10, 132, 255, 0.30);
+    box-shadow: 0 0 12px rgba(10, 132, 255, 0.14);
+}
+
+.teal-icon {
+    background: rgba(90, 200, 245, 0.16);
+    border: 1px solid rgba(90, 200, 245, 0.30);
+    box-shadow: 0 0 12px rgba(90, 200, 245, 0.14);
+}
+
+/* ── Card image — show actual PNG colors, same as certifications ── */
+.other-img {
+    height: 44px;
+    width: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.40));
+}
+
+/* ── Item glass card ────────────────────────────────────────────── */
+.other-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--label-1);
+    letter-spacing: 0.1px;
+    border-radius: 14px;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0  2px  8px rgba(0, 0, 0, 0.20),
+        0  8px 24px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    cursor: default;
+
+    opacity: 0;
+    transform: scale(0.80) translateY(22px);
+    transition:
+        opacity      0.50s var(--ease-out) var(--focus-delay, 0s),
+        transform    0.50s var(--spring)   var(--focus-delay, 0s),
+        box-shadow   0.24s ease,
+        border-color 0.24s ease;
+}
+
+.other-box.focus-scale--visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* ── Per-accent hover glow ──────────────────────────────────────── */
+.other-box--yellow.focus-scale--visible:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+        0  4px 16px rgba(0, 0, 0, 0.26),
+        0 16px 36px rgba(0, 0, 0, 0.30),
+        0 10px 28px rgba(255, 214, 10, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    border-color: rgba(255, 214, 10, 0.30);
+}
+
+.other-box--blue.focus-scale--visible:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+        0  4px 16px rgba(0, 0, 0, 0.26),
+        0 16px 36px rgba(0, 0, 0, 0.30),
+        0 10px 28px rgba(10, 132, 255, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    border-color: rgba(10, 132, 255, 0.30);
+}
+
+.other-box--teal.focus-scale--visible:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+        0  4px 16px rgba(0, 0, 0, 0.26),
+        0 16px 36px rgba(0, 0, 0, 0.30),
+        0 10px 28px rgba(90, 200, 245, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    border-color: rgba(90, 200, 245, 0.30);
+}
+
+/* ── Label text ─────────────────────────────────────────────────── */
+.box-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── Tablet (768px – 1024px) — compact, shares intent with mobile ── */
+@media (max-width: 1024px) {
+    .section-heading-wrap {
+        margin: 16px 12px 10px;
+        gap: 8px;
+    }
+
+    .section-heading {
+        font-size: 12px;
+        padding: 6px 13px;
+    }
+
+    .section-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+    }
+
+    .other-box {
+        padding: 11px 13px;
+        border-radius: 13px;
+        font-size: 13px;
+    }
+
+    .other-img {
+        height: 38px;
+    }
+}
+
+/* ── Mobile (≤ 767px) — tightest layout ─────────────────────────── */
+@media (max-width: 767px) {
+    .section-heading-wrap {
+        margin: 14px 10px 8px;
+        gap: 8px;
+    }
+
+    .section-heading {
+        font-size: 11px;
+        padding: 5px 12px;
+    }
+
+    .section-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+    }
+
+    .other-box {
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        gap: 10px;
+    }
+
+    .other-img {
+        height: 32px;
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .other-box {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        animation: none;
+    }
+    .other-box--yellow.focus-scale--visible:hover,
+    .other-box--blue.focus-scale--visible:hover,
+    .other-box--teal.focus-scale--visible:hover {
+        transform: none;
+    }
 }

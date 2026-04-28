@@ -1,32 +1,166 @@
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 300px;
-    margin: 8px auto;
-    text-align: center;
-    font-family: arial;
-    font-size: 18px;
-  }
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioPersonalProjects.css
+   Apple Liquid Glass · HIG Dark Mode
+   ═══════════════════════════════════════════════════════════════════ */
 
-  
-  
-  .card .bottom {
+:host {
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+    --purple: #bf5af2;
+    --label-1: rgba(255, 255, 255, 1.00);
+    --label-2: rgba(235, 235, 245, 0.72);
+    --glass-bg:     rgba(255, 255, 255, 0.09);
+    --glass-blur:   blur(20px) saturate(180%) brightness(1.06);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Outer wrapper — breathing room around the entire grid */
+    display: block;
+    padding: 20px 16px 28px;
+}
+
+/* ── Project card — glass surface ───────────────────────────────── */
+/* watchOS Focus-Based Scaling entrance — JS adds .focus-scale--visible */
+.card {
+    position: relative;
+    /* lightning-layout-item padding="around-small" creates the card gap.
+       margin: 0 so the layout item padding is the only spacing.        */
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 15px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0  2px  8px rgba(0, 0, 0, 0.22),
+        0  8px 24px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    cursor: pointer;
+
+    /* Focus-scale entrance */
+    opacity: 0;
+    transform: scale(0.78) translateY(28px);
+    transition:
+        opacity   0.52s var(--ease-out) var(--focus-delay, 0s),
+        transform 0.52s var(--spring)   var(--focus-delay, 0s),
+        box-shadow 0.28s ease;
+}
+
+.card.focus-scale--visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.card.focus-scale--visible:hover {
+    transform: translateY(-6px) scale(1.025);
+    box-shadow:
+        0  4px 16px rgba(0, 0, 0, 0.28),
+        0 16px 40px rgba(0, 0, 0, 0.34),
+        0 12px 32px rgba(191, 90, 242, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+}
+
+/* ── Project screenshot image ────────────────────────────────────── */
+img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.22s ease;
+}
+
+.card:hover img {
+    opacity: 0.85;
+}
+
+/* ── Project name label ──────────────────────────────────────────── */
+.card .bottom {
     border: none;
     outline: 0;
-    padding: 12px;
-    color: white;
-    background-color: #000;
+    padding: 12px 16px;
+    color: var(--label-1);
+    background: rgba(191, 90, 242, 0.18);
+    border-top: 1px solid rgba(191, 90, 242, 0.25);
     text-align: center;
     cursor: pointer;
     width: 100%;
-  }
-  
-  .card .bottom:hover {
-    opacity: 0.7;
-  }
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    transition: background 0.20s ease;
+}
 
-  img{
-    height:350px;
-  }
-  img:hover{
-    opacity: 0.7;
-  }
+.card:hover .bottom {
+    background: rgba(191, 90, 242, 0.28);
+}
+
+/* ── Tablet (768px – 1024px) — compact, same intent as mobile ────── */
+@media (max-width: 1024px) {
+    :host {
+        padding: 14px 10px 20px;
+    }
+
+    img {
+        height: 160px;
+    }
+
+    .card {
+        border-radius: 14px;
+    }
+
+    .card .bottom {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+}
+
+/* ── Mobile (≤ 767px) — tightest layout ─────────────────────────── */
+@media (max-width: 767px) {
+    :host {
+        padding: 10px 4px 16px;
+    }
+
+    img {
+        height: 130px;
+    }
+
+    .card {
+        border-radius: 12px;
+    }
+
+    .card .bottom {
+        font-size: 12px;
+        padding: 9px 10px;
+    }
+
+    /* No hover lift on touch screens */
+    .card.focus-scale--visible:hover {
+        transform: none;
+        box-shadow:
+            0  2px  8px rgba(0, 0, 0, 0.22),
+            0  8px 24px rgba(0, 0, 0, 0.30),
+            inset 0 1px 0 rgba(255, 255, 255, 0.35),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        animation: none;
+    }
+    .card.focus-scale--visible:hover {
+        transform: none;
+    }
+}

@@ -1,24 +1,669 @@
-.accordian-wrapper{
-    background:#fff;
-}
-/* lightning-tab{
-    background-image: url(https://www.transparenttextures.com/patterns/white-leather.png);
-    background-color: #60cdff;
-} */
-.show-tabs-on-desktop-view{
-    display:block;
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioTabsWrapper.css
+   Apple Liquid Glass · Custom tab bar — replaces lightning-tabset
+   which cannot be glass-styled through LWR Shadow DOM.
+   One unified scrollable pill row for all breakpoints.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Design tokens ──────────────────────────────────────────────── */
+:host {
+    /* ── Canonical design tokens — mirrors portfolioBanner exactly ── */
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+
+    /* Apple HIG dark-mode system colours — full published set */
+    --blue:   #0a84ff;
+    --green:  #30d158;
+    --yellow: #ffd60a;
+    --orange: #ff9f0a;
+    --red:    #ff453a;
+    --indigo: #5e5ce6;
+    --purple: #bf5af2;
+    --teal:   #5ac8f5;
+    --mint:   #63e6e2;
+
+    /* Label hierarchy — Apple HIG dark-mode RGBA */
+    --label-1: rgba(255, 255, 255, 1.00);
+    --label-2: rgba(235, 235, 245, 0.60);
+    --label-3: rgba(235, 235, 245, 0.38);
+
+    /* ── Glass depth system (3 intentional levels) ──────────────────
+       Level 1 — Banner main card:  0.13 / blur(24px) / brightness(1.08)
+       Level 2 — Stat cards:        0.10 / blur(20px) / brightness(1.06)
+       Level 3 — Tab bar / pills:   0.11 / blur(24px) / brightness(1.08)  ← this component
+       Tab bar sits at the same visual weight as the banner but with a
+       thinner feel because it is a strip, not a card. */
+    --glass-bg:     rgba(255, 255, 255, 0.11);
+    --glass-blur:   blur(24px) saturate(180%) brightness(1.08);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-hi-top: rgba(255, 255, 255, 0.55);
+
+    /* Active pill glass — filled chip, brighter than bar background */
+    --pill-active-bg:     rgba(255, 255, 255, 0.18);
+    --pill-active-border: rgba(255, 255, 255, 0.30);
+
+    /* Dynamic Type scale — full HIG set */
+    --t-large-title: 34px;
+    --t-title-1:     28px;
+    --t-subhead:     15px;
+    --t-footnote:    13px;
+
+    /* 4pt spacing grid */
+    --sp-1:  4px;
+    --sp-2:  8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+    --sp-8: 32px;
+
+    /* Easing */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.show-accordion-on-mobile-view{
-    display:none;
+/* ── Root wrapper — transparent, floats above portfolioWrapper aurora ────
+   The single aurora + drift animation now lives exclusively in
+   portfolioWrapper.css. This root is a transparent layout shell.
+   ─────────────────────────────────────────────────────────────────────── */
+.tabs-root {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-family: var(--font-display);
+
+    /* Transparent — aurora comes from portfolioWrapper */
+    background: transparent;
+
+    /* Ensure content fills the full scrollable area */
+    min-height: 100%;
+
+    /* Default text color for content rendered inside panels */
+    color: var(--label-1);
+
 }
-@media (max-width : 1024px){
-    .show-tabs-on-desktop-view{
-        display : none;
+
+/* ── Tab bar outer wrap — sticky glass strip ────────────────────── */
+.tab-bar-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    /* Glass bar */
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+
+    /* Bottom refraction line — separates bar from panel content */
+    border-bottom: 1px solid var(--glass-border);
+
+    /* Subtle shadow beneath the bar for depth */
+    box-shadow:
+        0 1px 0  rgba(255, 255, 255, 0.14),
+        0 4px 24px rgba(0, 0, 0, 0.35);
+
+    /* Horizontal scroll on mobile without scrollbar showing */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.tab-bar-wrap::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── Tab bar nav — pill row ─────────────────────────────────────── */
+.tab-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-1);
+    padding: var(--sp-2) var(--sp-4);
+
+    /* Allow shrink but don't wrap — horizontal scroll handles overflow */
+    flex-wrap: nowrap;
+    min-width: max-content;
+    width: 100%;
+}
+
+/* ── Tab button — inactive state ────────────────────────────────── */
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    padding: 7px var(--sp-3);
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    /* Typography
+       Raised from label-2 (0.60) to 0.80 — inactive tabs must be clearly
+       readable; 60% on a near-black glass bar is near-invisible in practice */
+    font-family: var(--font-display);
+    font-size: var(--t-footnote);
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    color: rgba(235, 235, 245, 0.80);
+
+    /* Smooth all transitions */
+    transition:
+        background   0.22s var(--ease-out),
+        border-color 0.22s var(--ease-out),
+        box-shadow   0.22s var(--ease-out),
+        color        0.18s ease,
+        transform    0.18s var(--spring);
+
+    /* Remove default button styles */
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover — ghost fill, full white */
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.10);
+    color: rgba(255, 255, 255, 1.00);
+    transform: translateY(-1px);
+}
+
+/* Focus-visible — keyboard navigation ring */
+.tab-btn:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+}
+
+/* ── Active pill — filled glass chip with accent specular ────────── */
+.tab-btn[aria-selected="true"] {
+    background: var(--pill-active-bg);
+    border-color: var(--pill-active-border);
+    color: var(--label-1);
+    font-weight: 600;
+
+    /* 6-layer shadow: depth + bright top specular (overridden per accent) */
+    box-shadow:
+        0 2px 8px  rgba(0, 0, 0, 0.25),
+        0 4px 16px rgba(0, 0, 0, 0.20),
+        inset 0  1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        inset  1px 0 0 rgba(255, 255, 255, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.10);
+
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+            backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* ── Per-tab accent specular + glow on active ────────────────────── */
+/* Summary — teal */
+.tab-btn[data-tab="summary"][aria-selected="true"] {
+    box-shadow:
+        0 2px 8px  rgba(0, 0, 0, 0.25),
+        0 4px 20px rgba(90, 200, 245, 0.22),
+        inset 0  1px 0 rgba(90, 200, 245, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        inset  1px 0 0 rgba(255, 255, 255, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.10);
+    color: var(--teal);
+}
+
+/* Work Experience — blue */
+.tab-btn[data-tab="work"][aria-selected="true"] {
+    box-shadow:
+        0 2px 8px  rgba(0, 0, 0, 0.25),
+        0 4px 20px rgba(10, 132, 255, 0.22),
+        inset 0  1px 0 rgba(10, 132, 255, 0.50),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        inset  1px 0 0 rgba(255, 255, 255, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.10);
+    color: var(--blue);
+}
+
+/* Personal Projects — purple */
+.tab-btn[data-tab="projects"][aria-selected="true"] {
+    box-shadow:
+        0 2px 8px  rgba(0, 0, 0, 0.25),
+        0 4px 20px rgba(191, 90, 242, 0.22),
+        inset 0  1px 0 rgba(191, 90, 242, 0.50),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        inset  1px 0 0 rgba(255, 255, 255, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.10);
+    color: var(--purple);
+}
+
+/* Skills — green */
+.tab-btn[data-tab="skills"][aria-selected="true"] {
+    box-shadow:
+        0 2px 8px  rgba(0, 0, 0, 0.25),
+        0 4px 20px rgba(48, 209, 88, 0.22),
+        inset 0  1px 0 rgba(48, 209, 88, 0.48),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        inset  1px 0 0 rgba(255, 255, 255, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.10);
+    color: var(--green);
+}
+
+/* Certifications — yellow */
+.tab-btn[data-tab="certifications"][aria-selected="true"] {
+    box-shadow:
+        0 2px 8px  rgba(0, 0, 0, 0.25),
+        0 4px 20px rgba(255, 214, 10, 0.20),
+        inset 0  1px 0 rgba(255, 214, 10, 0.48),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        inset  1px 0 0 rgba(255, 255, 255, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.10);
+    color: var(--yellow);
+}
+
+/* Education — mint */
+.tab-btn[data-tab="education"][aria-selected="true"] {
+    box-shadow:
+        0 2px 8px  rgba(0, 0, 0, 0.25),
+        0 4px 20px rgba(99, 230, 226, 0.20),
+        inset 0  1px 0 rgba(99, 230, 226, 0.48),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        inset  1px 0 0 rgba(255, 255, 255, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.10);
+    color: var(--mint);
+}
+
+/* Other Details — teal (matches component accent: yellow/blue/teal) */
+.tab-btn[data-tab="other"][aria-selected="true"] {
+    box-shadow:
+        0 2px 8px  rgba(0, 0, 0, 0.25),
+        0 4px 20px rgba(90, 200, 245, 0.22),
+        inset 0  1px 0 rgba(90, 200, 245, 0.50),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+        inset  1px 0 0 rgba(255, 255, 255, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.10);
+    color: var(--teal);
+}
+
+/* ── Tab icon ────────────────────────────────────────────────────── */
+.tab-icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    fill: currentColor;
+    /* Smooth color transition */
+    transition: fill 0.18s ease;
+}
+
+/* ── Tab label ───────────────────────────────────────────────────── */
+.tab-label {
+    line-height: 1;
+    /* Prevents layout shift when weight changes inactive → active */
+    display: inline-block;
+}
+
+/* ── Panels wrap ─────────────────────────────────────────────────── */
+.panels-wrap {
+    position: relative;
+    width: 100%;
+    /* Desktop — generous horizontal padding so content doesn't span
+       edge-to-edge on wide screens; max-width centres on ultra-wide. */
+    padding: 0 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    /* Clip any lightning-layout internal grid bleed (e.g. Other Details) */
+    overflow-x: hidden;
+}
+
+/* ── Mobile + Tablet (≤ 1024px) — minimal side padding ──────────── */
+@media (max-width: 1024px) {
+    .panels-wrap {
+        padding: 0 4px;
+    }
+}
+
+/* ── Tab panel — slide-fade on tab switch ────────────────────────── */
+.tab-panel {
+    width: 100%;
+    /* Minimum height prevents very short tab content from collapsing
+       the viewport height, which would cause the browser scrollbar to
+       disappear and shift the page layout horizontally by ~15px. */
+    min-height: 60vh;
+    /* Slide up + fade — feels like panel rising into place.
+       transform on the panel itself is safe (it is not inside a
+       backdrop-filter container — no rectangle ghost risk). */
+    animation: panel-enter 0.35s var(--ease-out) both;
+}
+
+@keyframes panel-enter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Tab bar entrance — slides down, fires once on scroll into view ─
+   JS adds .tab-bar-wrap--entering when tabs-root enters viewport.     */
+.tab-bar-wrap--entering {
+    animation: tabbar-enter 0.55s var(--ease-out) both;
+}
+
+@keyframes tabbar-enter {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+/* Desktop only (> 1024px) — hide mobile chrome */
+.mobile-topbar  { display: none; }
+.mobile-overlay { display: none; }
+
+/* ── Mobile + Tablet breakpoint (≤ 1024px) ─────────────────────── */
+@media (max-width: 1024px) {
+
+    /* Hide desktop tab bar, show mobile top bar */
+    .tab-bar-wrap { display: none; }
+    .mobile-overlay { display: block; }
+
+    /* ── Mobile top bar — sticky, same glass as desktop tab bar ── */
+    .mobile-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 14px var(--sp-4);
+        background: var(--glass-bg);
+        -webkit-backdrop-filter: var(--glass-blur);
+                backdrop-filter: var(--glass-blur);
+        border-bottom: 1px solid var(--glass-border);
+        box-shadow:
+            0 1px 0  rgba(255, 255, 255, 0.14),
+            0 4px 24px rgba(0, 0, 0, 0.35);
     }
 
-    .show-accordion-on-mobile-view{
-        display:block;
+    .mobile-topbar__title {
+        font-family: var(--font-display);
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--label-1);
+        letter-spacing: 0.2px;
     }
 
+    /* ── Hamburger button ───────────────────────────────────────── */
+    .mobile-menu-btn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+        background: rgba(255, 255, 255, 0.10);
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .mobile-menu-btn:active {
+        background: rgba(255, 255, 255, 0.18);
+    }
+
+    .hbg-line {
+        display: block;
+        width: 18px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--label-1);
+        transition: transform 0.22s var(--ease-out), opacity 0.18s ease;
+        transform-origin: center;
+    }
+
+    /* ── Full-screen overlay — covers viewport ──────────────────── */
+    .mobile-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        /* Subtle dark scrim behind the nav panel */
+        background: rgba(0, 0, 0, 0.55);
+        -webkit-backdrop-filter: blur(6px);
+                backdrop-filter: blur(6px);
+        animation: overlay-in 0.25s var(--ease-out) both;
+    }
+
+    @keyframes overlay-in {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    .mobile-overlay__backdrop {
+        position: absolute;
+        inset: 0;
+    }
+
+    /* ── Glass nav panel — slides up from bottom ────────────────── */
+    .mobile-nav {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        /* Limit max-height so it doesn't cover entire screen on large phones */
+        max-height: 88vh;
+        overflow-y: auto;
+        border-radius: 24px 24px 0 0;
+        background: rgba(10, 10, 20, 0.92);
+        -webkit-backdrop-filter: blur(32px) saturate(180%) brightness(1.10);
+                backdrop-filter: blur(32px) saturate(180%) brightness(1.10);
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow:
+            0 -4px 24px rgba(0, 0, 0, 0.40),
+            0 -1px 0 rgba(255, 255, 255, 0.22);
+        padding-bottom: env(safe-area-inset-bottom, 16px);
+        animation: nav-slide-up 0.35s var(--ease-out) both;
+    }
+
+    @keyframes nav-slide-up {
+        from { transform: translateY(100%); opacity: 0.6; }
+        to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    /* ── Nav header — drag handle + title + close ───────────────── */
+    .mobile-nav__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px var(--sp-4) 12px;
+        /* Drag handle line */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .mobile-nav__title {
+        font-family: var(--font-display);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--label-2);
+    }
+
+    .mobile-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+        outline: none;
+        color: var(--label-2);
+        transition: background 0.18s ease;
+    }
+
+    .mobile-close-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .mobile-close-btn:active {
+        background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* ── Nav items list ─────────────────────────────────────────── */
+    .mobile-nav__items {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-2);
+        padding: var(--sp-3) var(--sp-4) var(--sp-4);
+    }
+
+    /* ── Individual nav item button ─────────────────────────────── */
+    .mob-btn {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        width: 100%;
+        padding: 14px var(--sp-4);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: rgba(255, 255, 255, 0.06);
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: var(--font-display);
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(235, 235, 245, 0.80);
+        letter-spacing: 0.1px;
+        text-align: left;
+        transition:
+            background   0.18s var(--ease-out),
+            border-color 0.18s ease,
+            transform    0.14s var(--spring);
+        /* Stagger entrance */
+        animation: mob-item-in 0.35s var(--ease-out) both;
+    }
+
+    /* Stagger delays for each button (1-7) */
+    .mobile-nav__items .mob-btn:nth-child(1) { animation-delay: 0.05s; }
+    .mobile-nav__items .mob-btn:nth-child(2) { animation-delay: 0.09s; }
+    .mobile-nav__items .mob-btn:nth-child(3) { animation-delay: 0.13s; }
+    .mobile-nav__items .mob-btn:nth-child(4) { animation-delay: 0.17s; }
+    .mobile-nav__items .mob-btn:nth-child(5) { animation-delay: 0.21s; }
+    .mobile-nav__items .mob-btn:nth-child(6) { animation-delay: 0.25s; }
+    .mobile-nav__items .mob-btn:nth-child(7) { animation-delay: 0.29s; }
+
+    @keyframes mob-item-in {
+        from { opacity: 0; transform: translateX(-12px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .mob-btn:active {
+        transform: scale(0.97);
+    }
+
+    /* Active selection state — filled glass */
+    .mob-btn[aria-selected="true"] {
+        font-weight: 600;
+        color: var(--label-1);
+        background: rgba(255, 255, 255, 0.13);
+        border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Per-accent active state */
+    .mob-btn--teal[aria-selected="true"]   { color: var(--teal);   border-color: rgba(90, 200, 245, 0.30); }
+    .mob-btn--blue[aria-selected="true"]   { color: var(--blue);   border-color: rgba(10, 132, 255, 0.30); }
+    .mob-btn--purple[aria-selected="true"] { color: var(--purple); border-color: rgba(191, 90, 242, 0.30); }
+    .mob-btn--green[aria-selected="true"]  { color: var(--green);  border-color: rgba(48, 209, 88, 0.30); }
+    .mob-btn--yellow[aria-selected="true"] { color: var(--yellow); border-color: rgba(255, 214, 10, 0.30); }
+    .mob-btn--mint[aria-selected="true"]   { color: var(--mint);   border-color: rgba(99, 230, 226, 0.30); }
+    .mob-btn--indigo[aria-selected="true"] { color: var(--indigo); border-color: rgba(94, 92, 230, 0.30); }
+
+    /* ── Icon wrap — accent-coloured circle ─────────────────────── */
+    .mob-icon-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .mob-icon--teal   { background: rgba(90, 200, 245, 0.16);  border: 1px solid rgba(90, 200, 245, 0.25);  color: var(--teal); }
+    .mob-icon--blue   { background: rgba(10, 132, 255, 0.16);  border: 1px solid rgba(10, 132, 255, 0.25);  color: var(--blue); }
+    .mob-icon--purple { background: rgba(191, 90, 242, 0.16);  border: 1px solid rgba(191, 90, 242, 0.25);  color: var(--purple); }
+    .mob-icon--green  { background: rgba(48, 209, 88, 0.16);   border: 1px solid rgba(48, 209, 88, 0.25);   color: var(--green); }
+    .mob-icon--yellow { background: rgba(255, 214, 10, 0.16);  border: 1px solid rgba(255, 214, 10, 0.25);  color: var(--yellow); }
+    .mob-icon--mint   { background: rgba(99, 230, 226, 0.16);  border: 1px solid rgba(99, 230, 226, 0.25);  color: var(--mint); }
+    .mob-icon--indigo { background: rgba(94, 92, 230, 0.16);   border: 1px solid rgba(94, 92, 230, 0.25);   color: var(--indigo); }
+
+    .mob-icon {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+    }
+
+    /* ── Label — takes remaining width ──────────────────────────── */
+    .mob-label {
+        flex: 1;
+    }
+
+    /* ── Trailing chevron ───────────────────────────────────────── */
+    .mob-chevron {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        fill: rgba(235, 235, 245, 0.30);
+    }
+
+    .mob-btn[aria-selected="true"] .mob-chevron {
+        fill: currentColor;
+        opacity: 0.60;
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .tab-btn,
+    .tab-icon {
+        transition: none !important;
+    }
+
+    .tab-panel,
+    .tab-bar-wrap--entering {
+        animation: none !important;
+        opacity: 1;
+        transform: none !important;
+    }
+
+    .tab-bar-wrap {
+        -webkit-backdrop-filter: blur(12px);
+                backdrop-filter: blur(12px);
+    }
+
+    .mobile-overlay,
+    .mobile-nav,
+    .mob-btn {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .mob-btn {
+        transition: none !important;
+    }
 }

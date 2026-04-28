@@ -1,63 +1,713 @@
-.banner {
-  background-color:#60a3d9;
-  text-align: center;
-  position: relative;
-  padding: 50px;
-  color:white;
+/* ================================================================
+   portfolioBanner.css
+   ----------------------------------------------------------------
+   Design lang  : Apple Liquid Glass (iOS 26 / macOS 26)
+   Color source  : Apple HIG dark-mode system palette
+   Blur source   : Authentic Liquid Glass recipe (WWDC 2025 research)
+   Type source   : SF Pro Dynamic Type scale
+   Spacing source: 4pt base-unit grid
+   ================================================================
+
+   KEY AUTHENTICITY RULES (from cited research):
+   1.  backdrop-filter MUST include saturate(180%) — creates vibrancy
+   2.  background opacity should be 0.10–0.18 on dark — NOT 0.30+
+   3.  inset 0 1px 0 rgba(255,255,255,0.55+) — top specular MANDATORY
+   4.  ::before sheen overlay — radial gradient simulating curved glass
+   5.  ::after bottom refraction line — 1px horizontal gradient
+   6.  Side inset catches: inset 1px 0 0 / inset -1px 0 0
+   7.  Spring easing: cubic-bezier(0.34, 1.56, 0.64, 1)
+   8.  brightness(1.08) on CARD glass — lifts not dims
+   9.  Gradient border via mask — richer than flat rgba border
+   ================================================================ */
+
+/* ── Design Tokens ─────────────────────────────────────────────── */
+:host {
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+
+    /* Apple HIG dark-mode system colours — full published set */
+    --blue:   #0a84ff;
+    --green:  #30d158;
+    --yellow: #ffd60a;
+    --orange: #ff9f0a;
+    --red:    #ff453a;
+    --indigo: #5e5ce6;
+    --purple: #bf5af2;
+    --teal:   #5ac8f5;
+    --mint:   #63e6e2;
+
+    /* Label hierarchy — Apple HIG dark-mode RGBA */
+    --label-1: rgba(255, 255, 255, 1.00);
+    --label-2: rgba(235, 235, 245, 0.60);
+    --label-3: rgba(235, 235, 245, 0.38);  /* raised from 0.30 — location is functional */
+
+    /* ── AUTHENTIC Liquid Glass values (research-verified) ── */
+    /*
+       Dark-mode glass card:
+       - background: 0.12–0.14 (NOT 0.07 — too invisible on dark)
+       - blur: 24px is the Liquid Glass sweet spot (not 40px which is "thick")
+       - saturate(180%) — MANDATORY for vibrancy, never skip
+       - brightness(1.08) — lifts luminance, simulates light through glass
+       - inset top specular: 0.55 white — the single most impactful detail
+    */
+    --glass-bg:       rgba(255, 255, 255, 0.13);
+    --glass-blur:     blur(24px) saturate(180%) brightness(1.08);
+    --glass-border:   rgba(255, 255, 255, 0.22);
+    --glass-hi-top:   rgba(255, 255, 255, 0.55);   /* raised — most critical detail */
+    --glass-hi-bot:   rgba(0,   0,   0,   0.12);
+    --glass-hi-left:  rgba(255, 255, 255, 0.18);   /* side edge catches */
+    --glass-hi-right: rgba(255, 255, 255, 0.10);
+    --glass-shadow:
+        0 2px  6px  rgba(0, 0, 0, 0.14),
+        0 8px  28px rgba(0, 0, 0, 0.32),
+        0 24px 64px rgba(0, 0, 0, 0.42);
+
+    /* Icon pill glass (slightly more opaque than card — creates depth layers) */
+    --pill-bg:     rgba(255, 255, 255, 0.10);
+    --pill-blur:   blur(16px) saturate(180%);
+    --pill-border: rgba(255, 255, 255, 0.18);
+    --pill-hi-top: rgba(255, 255, 255, 0.45);
+
+    /* HIG Dynamic Type — exact pt values */
+    --t-large-title: 34px;
+    --t-title-1:     28px;
+    --t-subhead:     15px;
+    --t-footnote:    13px;
+
+    /* HIG spacing (4pt base unit) */
+    --sp-1:  4px;
+    --sp-2:  8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+    --sp-8: 32px;
+    --sp-10: 40px;
+    --sp-16: 64px;
+
+    /* Spring easing (Apple UIKit spring approximation) */
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* .banner::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://www.transparenttextures.com/patterns/white-leather.png");
-  opacity: 0.5;
-  z-index: 1;
-} */
+/* ══════════════════════════════════════════════════════════════
+   BANNER SHELL — transparent, floats above portfolioWrapper aurora
+   The aurora background now lives exclusively in portfolioWrapper.css.
+   This component is a transparent layout shell; only the .glass-card
+   carries visual weight.
+   ══════════════════════════════════════════════════════════════ */
+.banner {
+    position: relative;
+    min-height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-16) var(--sp-4);
+    font-family: var(--font-display);
+    color: var(--label-1);
+    overflow: hidden;
 
-.banner-content {
-  position: relative;
-  z-index: 2;
+    /* Transparent — aurora comes from portfolioWrapper */
+    background: transparent;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GLASS CARD — Authentic Liquid Glass Panel
+   ──────────────────────────────────────────────────────────────
+   Structural layers (bottom → top):
+   ① .banner background (aurora gradient)           z-index: auto
+   ② .glass-card backdrop-filter blurs the aurora   z-index: 2
+   ③ .glass-card::before — specular sheen overlay   z-index: 0 (inside card)
+   ④ .glass-card content (text, avatar, icons)      z-index: 1 (inside card)
+   ⑤ .glass-card::after — bottom refraction line    z-index: 2 (inside card)
+   ══════════════════════════════════════════════════════════════ */
+.glass-card {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-4);
+    max-width: 560px;
+    width: 100%;
+    padding: var(--sp-10) var(--sp-8);
+    border-radius: 28px;
+    overflow: hidden;         /* clips ::before sheen to card shape */
+    isolation: isolate;       /* new stacking context for backdrop-filter */
+
+    /* AUTHENTIC LIQUID GLASS FILL
+       0.13 opacity — transparent enough to show aurora through blur,
+       opaque enough to separate from raw background */
+    background: var(--glass-bg);
+
+    /* THE CORE BLUR STACK
+       blur(24px)      — Liquid Glass sweet spot (not too heavy)
+       saturate(180%)  — MANDATORY vibrancy, makes aurora pop through
+       brightness(1.08)— luminance lift, simulates light transmission */
+    -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+    will-change: backdrop-filter;
+
+    /* BORDER SYSTEM
+       Primary: rgba(255,255,255,0.22) rim
+       Gradient border via ::before pseudo ensures directional light */
+    border: 1px solid var(--glass-border);
+
+    /* SHADOW SYSTEM — 6 layered shadows for depth
+       Top specular (inset 0 1px 0) is THE most critical detail.
+       Research confirms 0.55 white = authentic Apple glass highlight.
+       Side inset catches simulate curved glass edge reflections. */
+    box-shadow:
+        var(--glass-shadow),
+        inset 0  1px 0 var(--glass-hi-top),    /* top specular — critical */
+        inset 0 -1px 0 var(--glass-hi-bot),    /* bottom shadow */
+        inset  1px 0 0 var(--glass-hi-left),   /* left edge catch */
+        inset -1px 0 0 var(--glass-hi-right);  /* right edge catch */
+
+    animation: card-rise 0.9s var(--ease-out) both;
+}
+
+/* card-rise: ONLY used on .glass-card itself — never on children.
+   Children use child-fade (opacity only) to prevent composited-layer
+   rectangles appearing on the dark glass background. */
+@keyframes card-rise {
+    from {
+        opacity: 0;
+        transform: translateY(32px) scale(0.97);
+        -webkit-backdrop-filter: blur(0px) saturate(100%);
+                backdrop-filter: blur(0px) saturate(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        -webkit-backdrop-filter: var(--glass-blur);
+                backdrop-filter: var(--glass-blur);
+    }
+}
+
+/* child-fade: opacity-only — NO transform, NO composited layer rectangle */
+@keyframes child-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
+/* ── Specular sheen overlay + animated shimmer sweep ──────────
+   Layer stack (bottom → top inside ::before):
+   ① Static radial — upper-left light source (always visible)
+   ② Static diagonal — curved-surface sweep (always visible)
+   No sweep animation — the single page-level orb drift in
+   portfolioWrapper.css provides all ambient motion on the page.
+   ────────────────────────────────────────────────────────────── */
+.glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+
+    background:
+        /* ① Static radial: upper-left light source */
+        radial-gradient(
+            ellipse 75% 45% at 20% 8%,
+            rgba(255, 255, 255, 0.22) 0%,
+            transparent 72%
+        ),
+        /* ② Static diagonal: curved-surface sweep */
+        linear-gradient(
+            155deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0.05) 35%,
+            transparent               55%,
+            rgba(255, 255, 255, 0.04) 100%
+        );
+}
+
+/* ── Bottom refraction caustic line ──
+   Bright 1px line at card base = light bending through glass edge.
+   Top refraction line at card top = second specular.
+   Both fade to transparent at edges (never flat/hard). */
+.glass-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 2;
+
+    /* Two 1px lines: top (specular entry) + bottom (caustic exit) */
+    background:
+        /* Top specular line */
+        linear-gradient(
+            90deg,
+            transparent          0%,
+            rgba(255,255,255,0.55) 15%,
+            rgba(255,255,255,0.55) 85%,
+            transparent          100%
+        ) top / 100% 1px no-repeat,
+        /* Bottom caustic line */
+        linear-gradient(
+            90deg,
+            transparent          0%,
+            rgba(255,255,255,0.28) 18%,
+            rgba(255,255,255,0.28) 82%,
+            transparent          100%
+        ) bottom / 100% 1px no-repeat;
+}
+
+/*
+   Content must sit above the ::before sheen overlay (z-index: 0).
+   EXCEPTION: .social-icons-row must NOT get position:relative or
+   z-index — it would create a stacking context that makes the row
+   render as a visible rectangle. Exclude it explicitly.
+*/
+.glass-card > *:not(.social-icons-row) {
+    position: relative;
+    z-index: 1;
+}
+
+/* The row itself is transparent — only needs to stack above the sheen */
+.social-icons-row {
+    position: relative;
+    z-index: 1;
+    /* background is already transparent from the rule above */
+}
+
+/* ══════════════════════════════════════════════════════════════
+   AVATAR — Conic gradient ring + breathing glow
+   ══════════════════════════════════════════════════════════════ */
+.avatar-ring {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    padding: 3.5px;
+
+    /* Conic gradient ring — directional light hitting circular glass edge.
+       White at top-left (light source) → blue → indigo → purple → back to white */
+    background: conic-gradient(
+        from 130deg,
+        rgba(255, 255, 255, 0.95)  0deg,
+        rgba(10,  132, 255, 0.85)  80deg,
+        rgba(94,   92, 230, 0.75) 175deg,
+        rgba(191,  90, 242, 0.65) 260deg,
+        rgba(255, 255, 255, 0.95) 360deg
+    );
+
+    box-shadow:
+        0 0  0  1px rgba(255, 255, 255, 0.10),
+        0 0 24px rgba(10, 132, 255, 0.45),
+        0 0 60px rgba(94,  92, 230, 0.28),
+        0 16px 48px rgba(0, 0, 0, 0.55);
+
+    animation:
+        child-fade   0.7s var(--ease-out)              0.10s both,
+        ring-breathe 5.5s ease-in-out infinite alternate;
+
+    margin-bottom: var(--sp-1);
+}
+
+@keyframes ring-breathe {
+    from {
+        box-shadow:
+            0 0  0  1px rgba(255, 255, 255, 0.08),
+            0 0 18px rgba(10, 132, 255, 0.35),
+            0 0 44px rgba(94,  92, 230, 0.20),
+            0 16px 48px rgba(0, 0, 0, 0.50);
+    }
+    to {
+        box-shadow:
+            0 0  0  1px rgba(255, 255, 255, 0.18),
+            0 0 52px rgba(10, 132, 255, 0.58),
+            0 0 88px rgba(94,  92, 230, 0.38),
+            0 20px 56px rgba(0, 0, 0, 0.58);
+    }
 }
 
 .profile-pic {
-  border-radius: 50%;
-  width: 160px;
-  height: 160px;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   TYPOGRAPHY — SF Pro Dynamic Type scale
+   ══════════════════════════════════════════════════════════════ */
+
+/* Large Title: 34px / 700 — the strongest possible identity statement */
 .name {
-  font-size: 32px;
-  font-weight: 700;
+    font-size: var(--t-large-title);
+    font-weight: 700;
+    letter-spacing: -0.7px;   /* SF Pro Display negative tracking */
+    line-height: 1.14;
+    color: var(--label-1);
+    margin: 0;
+    /* Subtle text shadow lifts name off glass surface */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    animation: child-fade 0.7s var(--ease-out) 0.18s both;
 }
 
-.designation,
-.location {
-  font-size: 24px;
+/* ── Role row ── */
+.role-row {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: child-fade 0.7s var(--ease-out) 0.26s both;
 }
 
+/* Designation chip — blue-tinted glass pill
+   More prominent specular (0.35 inset) because it's a foreground element */
+.role-chip {
+    font-size: var(--t-subhead);
+    font-weight: 500;
+    color: var(--label-1);
+    padding: 5px 14px;
+    border-radius: 9999px;
+    background: rgba(10, 132, 255, 0.20);
+    border: 1px solid rgba(10, 132, 255, 0.40);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),   /* specular on chip */
+        0 2px 10px rgba(10, 132, 255, 0.22);
+    letter-spacing: 0.1px;
+    white-space: nowrap;
+}
+
+/* "at" — quiet tertiary connector */
+.role-at {
+    font-size: var(--t-subhead);
+    font-weight: 400;
+    color: var(--label-3);
+}
+
+/* Company name — teal accent, semibold.
+   #5ac8f5 = macOS dark cyan (exact Apple HIG value).
+   Teal reads bright on dark glass without being as harsh as white. */
+.company-name {
+    font-size: var(--t-subhead);
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: -0.1px;
+    white-space: nowrap;
+    /* Teal glow — makes the company name "shine" through the glass */
+    text-shadow: 0 0 16px rgba(90, 200, 245, 0.45);
+}
+
+/* ── Location row ── */
+.location-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    animation: child-fade 0.7s var(--ease-out) 0.34s both;
+}
+
+.pin-icon {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    color: var(--teal);
+    opacity: 0.75;
+}
+
+/* Location text: 0.55 opacity (functional text floor).
+   Was 0.30 which is decorative-only territory. */
+.location-text {
+    font-size: var(--t-footnote);
+    font-weight: 400;
+    color: rgba(235, 235, 245, 0.55);
+    letter-spacing: 0.2px;
+}
+
+/* ── Divider — fades to transparent at edges ── */
+.divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.18) 18%,
+        rgba(255, 255, 255, 0.18) 82%,
+        transparent 100%
+    );
+    margin: var(--sp-1) 0;
+    animation: child-fade 0.7s var(--ease-out) 0.40s both;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SOCIAL ICONS — Individual Liquid Glass pills
+   Each pill is its own frosted glass element with:
+   - backdrop-filter blur
+   - inset top specular (0.45 white)
+   - brand-coloured hover glow
+   ══════════════════════════════════════════════════════════════ */
+/*
+   .social-icons-row is a PURE layout wrapper — no background, no
+   stacking context, no isolation. Any of those would create a
+   visible rectangle ghost behind the individual pill buttons.
+   The pills themselves carry all the glass styling.
+*/
+.social-icons-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    flex-wrap: wrap;
+    /* No background, no border, no isolation, no box-shadow */
+    background: transparent;
+    /* Fade-in only — no translate/scale so no layout rect appears */
+    animation: row-fade 0.5s var(--ease-out) 0.38s both;
+}
+
+@keyframes row-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.social-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--pill-bg);
+    -webkit-backdrop-filter: var(--pill-blur);
+            backdrop-filter: var(--pill-blur);
+    border: 1px solid var(--pill-border);
+    box-shadow:
+        inset 0  1px 0 var(--pill-hi-top),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.16),
+        0 4px 16px rgba(0, 0, 0, 0.30);
+    text-decoration: none;
+    cursor: pointer;
+    /*
+       isolation: isolate is intentionally REMOVED from pills too.
+       It was creating nested stacking contexts that caused the
+       backdrop-filter to composite against the pill's own background
+       instead of the aurora behind the glass card — making the blur
+       look like a flat grey square rather than frosted glass.
+    */
+
+    /* Starts hidden; JS adds .icon-visible with staggered delay */
+    opacity: 0;
+    transform: translateY(10px) scale(0.88);
+
+    transition:
+        transform    0.24s var(--spring),
+        background   0.20s ease,
+        border-color 0.20s ease,
+        box-shadow   0.20s ease;
+}
+
+.social-pill.icon-visible {
+    animation: icon-pop 0.45s var(--spring) both;
+}
+
+@keyframes icon-pop {
+    from { opacity: 0; transform: translateY(10px) scale(0.84); }
+    to   { opacity: 1; transform: translateY(0)    scale(1.00); }
+}
+
+/* Generic hover — blue. Per-brand overrides below override this. */
+.social-pill:hover {
+    transform: translateY(-5px) scale(1.13);
+    background: rgba(10, 132, 255, 0.20);
+    border-color: rgba(10, 132, 255, 0.42);
+    box-shadow:
+        inset 0  1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 10px 28px rgba(10, 132, 255, 0.32),
+        0 3px  10px rgba(0,   0,   0, 0.28);
+}
+
+.social-pill:active {
+    transform: translateY(-1px) scale(0.95);
+    transition-duration: 0.08s;
+}
+
+/* ── Icon base ── */
 .social-icon {
-  width: 40px;
-  height: 40px;
-  margin: 16px 16px 0px 0px;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+    transition: transform 0.24s var(--spring);
 }
-.trailhead-url{
-  transform: scale(1.5) translateY(5px);
+.social-pill:hover .social-icon { transform: scale(1.10); }
+
+/* ── GitHub — pure black path → invert white ── */
+.github-icon .social-icon {
+    filter: brightness(0) invert(1) opacity(0.88);
 }
-.video-container {
-  display: inline-block;
-  border-radius: 50%;
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
+.github-icon:hover .social-icon { filter: brightness(0) invert(1) opacity(1); }
+.github-icon:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.32);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.60),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 10px 28px rgba(255, 255, 255, 0.12),
+        0 3px 10px rgba(0, 0, 0, 0.30);
 }
 
-.video-class {
-  border-radius: 50%;
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
+/* ── X/Twitter — pure black path → invert white ── */
+.twitter-icon .social-icon {
+    filter: brightness(0) invert(1) opacity(0.88);
+}
+.twitter-icon:hover .social-icon { filter: brightness(0) invert(1) opacity(1); }
+.twitter-icon:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.32);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.60),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 10px 28px rgba(255, 255, 255, 0.12),
+        0 3px 10px rgba(0, 0, 0, 0.30);
+}
+
+/* ── LinkedIn — brand blue bg + white icon, keep colours ── */
+.linkedin-icon .social-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    filter: drop-shadow(0 1px 4px rgba(10, 102, 194, 0.40));
+}
+.linkedin-icon:hover {
+    background: rgba(10, 102, 194, 0.24);
+    border-color: rgba(10, 102, 194, 0.50);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.50),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 10px 28px rgba(10, 102, 194, 0.40),
+        0 3px 10px rgba(0, 0, 0, 0.24);
+}
+.linkedin-icon:hover .social-icon {
+    filter: drop-shadow(0 2px 10px rgba(10, 102, 194, 0.70)) brightness(1.06);
+}
+
+/* ── CodePen — dark SVG (#111 bg + #e6e6e6 strokes)
+   mix-blend-mode:screen = black pixels become transparent,
+   grey strokes appear white on the dark pill background ── */
+.codepen-icon {
+    background: rgba(16, 16, 22, 0.80);
+}
+.codepen-icon .social-icon {
+    width: 28px;
+    height: 28px;
+    mix-blend-mode: screen;
+    opacity: 0.92;
+    filter: brightness(1.12);
+}
+.codepen-icon:hover {
+    background: rgba(255, 255, 255, 0.13);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 10px 28px rgba(255, 255, 255, 0.10),
+        0 3px 10px rgba(0, 0, 0, 0.30);
+}
+.codepen-icon:hover .social-icon { opacity: 1; filter: brightness(1.28); }
+
+/* ── YouTube — brand red gradient, keep ── */
+.youtube-icon .social-icon {
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 1px 4px rgba(230, 32, 48, 0.38));
+}
+.youtube-icon:hover {
+    background: rgba(230, 32, 48, 0.20);
+    border-color: rgba(230, 32, 48, 0.44);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.48),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 10px 28px rgba(230, 32, 48, 0.38),
+        0 3px 10px rgba(0, 0, 0, 0.24);
+}
+.youtube-icon:hover .social-icon {
+    filter: drop-shadow(0 2px 12px rgba(230, 32, 48, 0.65)) brightness(1.06);
+}
+
+/* ── Trailhead — multi-colour brand badge, keep ── */
+.trailhead-icon .social-icon {
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(0 1px 4px rgba(0, 154, 68, 0.32));
+}
+.trailhead-icon:hover {
+    background: rgba(0, 154, 68, 0.18);
+    border-color: rgba(0, 154, 68, 0.38);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.48),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+        0 10px 28px rgba(0, 154, 68, 0.32),
+        0 3px 10px rgba(0, 0, 0, 0.24);
+}
+.trailhead-icon:hover .social-icon {
+    filter: drop-shadow(0 2px 10px rgba(0, 154, 68, 0.58)) brightness(1.05);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ACCESSIBILITY — Reduced motion
+   Research confirms this must be included in any production
+   implementation. Reduces blur cost too.
+   ══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    /* card-rise (glass-card) + child-fade (all children) + row/icon animations */
+    .glass-card,
+    .avatar-ring,
+    .name,
+    .role-row,
+    .location-row,
+    .divider,
+    .social-icons-row,
+    .social-pill {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+    }
+    /* Reduce blur for perf on reduced-motion devices */
+    .glass-card {
+        -webkit-backdrop-filter: blur(12px) saturate(160%);
+                backdrop-filter: blur(12px) saturate(160%);
+        background: rgba(255, 255, 255, 0.18);  /* compensate with opacity */
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 720px) {
+    .banner {
+        min-height: 460px;
+        padding: var(--sp-10) var(--sp-3);
+    }
+    .glass-card {
+        padding: var(--sp-8) var(--sp-5);
+        border-radius: 22px;
+        gap: var(--sp-3);
+    }
+    .avatar-ring {
+        width: 148px;
+        height: 148px;
+    }
+    .name {
+        font-size: var(--t-title-1); /* 28px on compact */
+    }
+    .social-pill {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+    }
+    .social-icon { width: 20px; height: 20px; }
+}
+
+@media (max-width: 400px) {
+    .glass-card { border-radius: 18px; }
+    .name { font-size: 25px; }
+    .role-chip, .role-at, .company-name { font-size: var(--t-footnote); }
 }

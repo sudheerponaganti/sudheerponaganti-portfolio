@@ -1,11 +1,34 @@
 <!-- sldsValidatorIgnore -->
 <template>
-    <!-- <div style="height: 300px;"> -->
-        <lightning-datatable
-                key-field="id"
-                data={educationList}
-                columns={columns}
-                hide-checkbox-column>
-        </lightning-datatable>
-    <!-- </div> -->
+    <div class="edu-list">
+        <template for:each={educationList} for:item="edu">
+            <div key={edu.id} class="edu-item">
+
+                <!-- Timeline spine: dot + line -->
+                <div class="edu-spine">
+                    <div class="edu-dot">
+                        <lightning-icon icon-name="utility:education" alternative-text="Education" size="small"></lightning-icon>
+                    </div>
+                    <div class="edu-line"></div>
+                </div>
+
+                <!-- Card -->
+                <div class="edu-card">
+
+                    <!-- Header: degree title + year -->
+                    <div class="edu-header">
+                        <h3 class="edu-title">{edu.Title__c}</h3>
+                        <span class="edu-year">{edu.PassingYear__c}</span>
+                    </div>
+
+                    <!-- Institution + grade -->
+                    <div class="edu-meta">
+                        <span class="edu-institution">{edu.InstitutionName__c}</span>
+                        <span class="edu-grade-pill">{edu.PassingGrade__c}</span>
+                    </div>
+
+                </div>
+            </div>
+        </template>
+    </div>
 </template>

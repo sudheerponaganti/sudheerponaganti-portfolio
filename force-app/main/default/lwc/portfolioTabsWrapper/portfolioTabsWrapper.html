@@ -1,88 +1,291 @@
+<!-- sldsValidatorIgnore -->
 <template>
-    <div class="tabs-wrapper show-tabs-on-desktop-view">
+    <div class="tabs-root">
 
-        <lightning-tabset variant="scoped" onclick={buttonClickHandler}>
-            <lightning-tab label="Summary">
-                <template if:true={recordId}>
-               <c-portfolio-summary record-id={recordId} object-api-name={objectApiName}></c-portfolio-summary>
+        <!-- ══════════════════════════════════════════════════════════
+             DESKTOP TAB BAR  (≥ 768px — hidden on mobile via CSS)
+             Glass sticky strip, horizontally scrollable if needed.
+             ══════════════════════════════════════════════════════════ -->
+        <div class="tab-bar-wrap">
+            <nav class="tab-bar" role="tablist" aria-label="Portfolio sections">
+
+                <button class="tab-btn" data-tab="summary"
+                        role="tab" aria-selected={isSummaryActive}
+                        aria-controls="panel-summary" onclick={handleTabClick}>
+                    <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3.5h8V15H8v-1.5zm0-3.5h4v1.5H8V10z"/>
+                    </svg>
+                    <span class="tab-label">Summary</span>
+                </button>
+
+                <button class="tab-btn" data-tab="work"
+                        role="tab" aria-selected={isWorkActive}
+                        aria-controls="panel-work" onclick={handleTabClick}>
+                    <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM10 5h4v2h-4V5zm10 15H4V9h16v11z"/>
+                    </svg>
+                    <span class="tab-label">Work Experience</span>
+                </button>
+
+                <button class="tab-btn" data-tab="projects"
+                        role="tab" aria-selected={isProjectsActive}
+                        aria-controls="panel-projects" onclick={handleTabClick}>
+                    <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                    </svg>
+                    <span class="tab-label">Personal Projects</span>
+                </button>
+
+                <button class="tab-btn" data-tab="skills"
+                        role="tab" aria-selected={isSkillsActive}
+                        aria-controls="panel-skills" onclick={handleTabClick}>
+                    <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 3.9 2.4-7.4L2 9.4h7.6L12 2z"/>
+                    </svg>
+                    <span class="tab-label">Skills</span>
+                </button>
+
+                <button class="tab-btn" data-tab="certifications"
+                        role="tab" aria-selected={isCertificationsActive}
+                        aria-controls="panel-certifications" onclick={handleTabClick}>
+                    <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M12 1l2.3 6.3H21l-5.4 4 2 6.3L12 14l-5.6 3.6 2-6.3L3 7.3h6.7L12 1zm0 14.5l3.8 2.5-1.4-4.3 3.7-2.7H13.5L12 6.7l-1.5 4.3H6l3.7 2.7-1.4 4.3L12 15.5zM8 22v-2l4-2.5 4 2.5v2l-4-2.5L8 22z"/>
+                    </svg>
+                    <span class="tab-label">Certifications</span>
+                </button>
+
+                <button class="tab-btn" data-tab="education"
+                        role="tab" aria-selected={isEducationActive}
+                        aria-controls="panel-education" onclick={handleTabClick}>
+                    <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M12 3L1 9l4 2.18V16a8 8 0 0 0 14 0v-4.82L23 9 12 3zm6 12.82A6 6 0 0 1 6 15.82v-3.5L12 15l6-2.68v3.5zM12 13L4.26 9 12 5 19.74 9 12 13z"/>
+                    </svg>
+                    <span class="tab-label">Education</span>
+                </button>
+
+                <button class="tab-btn" data-tab="other"
+                        role="tab" aria-selected={isOtherActive}
+                        aria-controls="panel-other" onclick={handleTabClick}>
+                    <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15h-1.5v-6H12v6zm0-8h-1.5V7.5H12V9z"/>
+                    </svg>
+                    <span class="tab-label">Other Details</span>
+                </button>
+
+            </nav>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════════
+             MOBILE TOP BAR  (< 768px — hidden on desktop via CSS)
+             Shows current section name + hamburger menu button.
+             ══════════════════════════════════════════════════════════ -->
+        <div class="mobile-topbar">
+            <span class="mobile-topbar__title">{activeTabLabel}</span>
+            <button class="mobile-menu-btn"
+                    aria-label="Open navigation menu"
+                    aria-expanded={isMenuOpen}
+                    aria-controls="mobile-overlay"
+                    onclick={toggleMenu}>
+                <!-- Animated hamburger → X icon -->
+                <span class="hbg-line hbg-line--1"></span>
+                <span class="hbg-line hbg-line--2"></span>
+                <span class="hbg-line hbg-line--3"></span>
+            </button>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════════
+             MOBILE FULL-SCREEN OVERLAY  (< 768px)
+             All 7 nav items as large glass cards, centred on screen.
+             Backdrop closes the menu when tapped outside the nav.
+             ══════════════════════════════════════════════════════════ -->
+        <template lwc:if={isMenuOpen}>
+            <div class="mobile-overlay" id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Navigation">
+
+                <!-- Tap-outside-to-close backdrop -->
+                <div class="mobile-overlay__backdrop" onclick={closeMenu}></div>
+
+                <!-- Glass nav panel — bottom-anchored for thumb reach -->
+                <nav class="mobile-nav" aria-label="Portfolio sections">
+
+                    <div class="mobile-nav__header">
+                        <span class="mobile-nav__title">Navigate</span>
+                        <button class="mobile-close-btn" aria-label="Close menu" onclick={closeMenu}>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="mobile-nav__items">
+
+                        <button class="mob-btn mob-btn--teal"
+                                data-tab="summary"
+                                aria-selected={isSummaryActive}
+                                onclick={handleMobileTabClick}>
+                            <span class="mob-icon-wrap mob-icon--teal">
+                                <svg class="mob-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17h8v1.5H8V17zm0-3.5h8V15H8v-1.5zm0-3.5h4v1.5H8V10z"/>
+                                </svg>
+                            </span>
+                            <span class="mob-label">Summary</span>
+                            <svg class="mob-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M10 6l6 6-6 6V6z"/>
+                            </svg>
+                        </button>
+
+                        <button class="mob-btn mob-btn--blue"
+                                data-tab="work"
+                                aria-selected={isWorkActive}
+                                onclick={handleMobileTabClick}>
+                            <span class="mob-icon-wrap mob-icon--blue">
+                                <svg class="mob-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M20 7h-4V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM10 5h4v2h-4V5zm10 15H4V9h16v11z"/>
+                                </svg>
+                            </span>
+                            <span class="mob-label">Work Experience</span>
+                            <svg class="mob-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M10 6l6 6-6 6V6z"/>
+                            </svg>
+                        </button>
+
+                        <button class="mob-btn mob-btn--purple"
+                                data-tab="projects"
+                                aria-selected={isProjectsActive}
+                                onclick={handleMobileTabClick}>
+                            <span class="mob-icon-wrap mob-icon--purple">
+                                <svg class="mob-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                                </svg>
+                            </span>
+                            <span class="mob-label">Personal Projects</span>
+                            <svg class="mob-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M10 6l6 6-6 6V6z"/>
+                            </svg>
+                        </button>
+
+                        <button class="mob-btn mob-btn--green"
+                                data-tab="skills"
+                                aria-selected={isSkillsActive}
+                                onclick={handleMobileTabClick}>
+                            <span class="mob-icon-wrap mob-icon--green">
+                                <svg class="mob-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 3.9 2.4-7.4L2 9.4h7.6L12 2z"/>
+                                </svg>
+                            </span>
+                            <span class="mob-label">Skills</span>
+                            <svg class="mob-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M10 6l6 6-6 6V6z"/>
+                            </svg>
+                        </button>
+
+                        <button class="mob-btn mob-btn--yellow"
+                                data-tab="certifications"
+                                aria-selected={isCertificationsActive}
+                                onclick={handleMobileTabClick}>
+                            <span class="mob-icon-wrap mob-icon--yellow">
+                                <svg class="mob-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M12 1l2.3 6.3H21l-5.4 4 2 6.3L12 14l-5.6 3.6 2-6.3L3 7.3h6.7L12 1zm0 14.5l3.8 2.5-1.4-4.3 3.7-2.7H13.5L12 6.7l-1.5 4.3H6l3.7 2.7-1.4 4.3L12 15.5zM8 22v-2l4-2.5 4 2.5v2l-4-2.5L8 22z"/>
+                                </svg>
+                            </span>
+                            <span class="mob-label">Certifications</span>
+                            <svg class="mob-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M10 6l6 6-6 6V6z"/>
+                            </svg>
+                        </button>
+
+                        <button class="mob-btn mob-btn--mint"
+                                data-tab="education"
+                                aria-selected={isEducationActive}
+                                onclick={handleMobileTabClick}>
+                            <span class="mob-icon-wrap mob-icon--mint">
+                                <svg class="mob-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M12 3L1 9l4 2.18V16a8 8 0 0 0 14 0v-4.82L23 9 12 3zm6 12.82A6 6 0 0 1 6 15.82v-3.5L12 15l6-2.68v3.5zM12 13L4.26 9 12 5 19.74 9 12 13z"/>
+                                </svg>
+                            </span>
+                            <span class="mob-label">Education</span>
+                            <svg class="mob-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M10 6l6 6-6 6V6z"/>
+                            </svg>
+                        </button>
+
+                        <button class="mob-btn mob-btn--teal"
+                                data-tab="other"
+                                aria-selected={isOtherActive}
+                                onclick={handleMobileTabClick}>
+                            <span class="mob-icon-wrap mob-icon--teal">
+                                <svg class="mob-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15h-1.5v-6H12v6zm0-8h-1.5V7.5H12V9z"/>
+                                </svg>
+                            </span>
+                            <span class="mob-label">Other Details</span>
+                            <svg class="mob-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M10 6l6 6-6 6V6z"/>
+                            </svg>
+                        </button>
+
+                    </div>
+                </nav>
+            </div>
+        </template>
+
+        <!-- ── Tab panels (shared desktop + mobile) ──────────────── -->
+        <div class="panels-wrap">
+
+            <template lwc:if={isSummaryActive}>
+                <div class="tab-panel" id="panel-summary" role="tabpanel">
+                    <template lwc:if={recordId}>
+                        <c-portfolio-summary record-id={recordId} object-api-name={objectApiName}></c-portfolio-summary>
+                    </template>
+                </div>
             </template>
-            </lightning-tab>
-            <lightning-tab label="Work Experience" class="work-experience" >
-                <template if:true={recordId}>
-               <c-portfolio-work-experience record-id={recordId}></c-portfolio-work-experience>
-                </template>
-            </lightning-tab>
-            <lightning-tab label="Personal Projects" class="personal-projects">
-                <c-portfolio-personal-projects></c-portfolio-personal-projects>
-            </lightning-tab>
-            <lightning-tab label="Skills" class="skills">
-                <template if:true={recordId}>
-               <c-portfolio-skills record-id={recordId}></c-portfolio-skills>
+
+            <template lwc:if={isWorkActive}>
+                <div class="tab-panel" id="panel-work" role="tabpanel">
+                    <template lwc:if={recordId}>
+                        <c-portfolio-work-experience record-id={recordId}></c-portfolio-work-experience>
+                    </template>
+                </div>
             </template>
-            </lightning-tab>
-            <lightning-tab label="Certifications">
-                <template if:true={recordId}>
-                    <c-portfolio-certifications record-id={recordId}></c-portfolio-certifications>
-                </template>
-            </lightning-tab>
-            <lightning-tab label="Education">
-                <template if:true={recordId}>
-                    <c-portfolio-education record-id={recordId}></c-portfolio-education>
-                </template>
-            </lightning-tab>
 
-            <lightning-tab label="Other Details">
-                <template if:true={recordId}>
-                    <c-portfolio-other-details record-id={recordId}></c-portfolio-other-details>
-                </template>
-            </lightning-tab>
-        </lightning-tabset>
+            <template lwc:if={isProjectsActive}>
+                <div class="tab-panel" id="panel-projects" role="tabpanel">
+                    <c-portfolio-personal-projects></c-portfolio-personal-projects>
+                </div>
+            </template>
 
-    </div>
+            <template lwc:if={isSkillsActive}>
+                <div class="tab-panel" id="panel-skills" role="tabpanel">
+                    <template lwc:if={recordId}>
+                        <c-portfolio-skills record-id={recordId}></c-portfolio-skills>
+                    </template>
+                </div>
+            </template>
 
-    <div class="accordion-wrapper show-accordion-on-mobile-view">
-        <lightning-accordion allow-multiple-sections-open onclick={buttonClickHandler}>
-        <lightning-accordion-section name="Summary" label="Summary" >
-            <template if:true={recordId}>
-                <c-portfolio-summary record-id={recordId} object-api-name={objectApiName}></c-portfolio-summary>
-             </template>
-        </lightning-accordion-section>
+            <template lwc:if={isCertificationsActive}>
+                <div class="tab-panel" id="panel-certifications" role="tabpanel">
+                    <template lwc:if={recordId}>
+                        <c-portfolio-certifications record-id={recordId}></c-portfolio-certifications>
+                    </template>
+                </div>
+            </template>
 
-        <lightning-accordion-section name="Work Experience" label="Work Experience" class="work-experience">
-            <template if:true={recordId}>
-                <c-portfolio-work-experience record-id={recordId}></c-portfolio-work-experience>
-                 </template>
-        </lightning-accordion-section>
+            <template lwc:if={isEducationActive}>
+                <div class="tab-panel" id="panel-education" role="tabpanel">
+                    <template lwc:if={recordId}>
+                        <c-portfolio-education record-id={recordId}></c-portfolio-education>
+                    </template>
+                </div>
+            </template>
 
-        <lightning-accordion-section name="Personal Projects" label="Personal Projects" class="personal-projects">
-            <c-portfolio-personal-projects></c-portfolio-personal-projects>
-        </lightning-accordion-section>
+            <template lwc:if={isOtherActive}>
+                <div class="tab-panel" id="panel-other" role="tabpanel">
+                    <template lwc:if={recordId}>
+                        <c-portfolio-other-details record-id={recordId}></c-portfolio-other-details>
+                    </template>
+                </div>
+            </template>
 
-        <lightning-accordion-section name="Skills" label="Skills">
-            <template if:true={recordId}>
-                <c-portfolio-skills record-id={recordId}></c-portfolio-skills>
-             </template>
-        </lightning-accordion-section>
-
-        <lightning-accordion-section name="Certifications" label="Certifications">
-            <template if:true={recordId}>
-                <c-portfolio-certifications record-id={recordId}></c-portfolio-certifications>
-             </template>
-        </lightning-accordion-section>
-        
-        <lightning-accordion-section name="Education" label="Education">
-            <template if:true={recordId}>
-                <c-portfolio-education record-id={recordId}></c-portfolio-education>
-             </template>
-        </lightning-accordion-section>
-
-        <lightning-accordion-section name="Other Details" label="Other Details">
-            <template if:true={recordId}>
-                <c-portfolio-other-details record-id={recordId}></c-portfolio-other-details>
-             </template>
-        </lightning-accordion-section>
-
-    </lightning-accordion>
+        </div>
 
     </div>
 </template>

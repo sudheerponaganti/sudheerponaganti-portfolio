@@ -12,6 +12,7 @@ platformAppBuilderCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/pla
 fscApCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/fscApCert.jpg`
 aplusCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/aPlusCert.jpg`
 copadoFunda1Img = `${PortfolioAssets}/PortfolioAssets/Certificates/copadoFunda1.jpg`
+copadoFunda2Img = `${PortfolioAssets}/PortfolioAssets/Certificates/copadoFunda2.jpg`
 aiAssociateCertImg = `${PortfolioAssets}/PortfolioAssets/Certificates/aiAssociateCert.jpg`
 
 
@@ -46,7 +47,10 @@ set certName(data){
             this.certImg = this.aplusCertImg
              break;
         case 'Copado Certified Fundamentals 1':
-        this.certImg = this.copadoFunda1Img
+            this.certImg = this.copadoFunda1Img
+            break;
+        case 'Copado Certified Fundamentals 2':
+            this.certImg = this.copadoFunda2Img
             break;
         case 'Salesforce Certified AI Associate':
         this.certImg = this.aiAssociateCertImg

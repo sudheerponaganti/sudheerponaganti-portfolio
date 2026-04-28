@@ -1,73 +1,59 @@
 <!-- sldsValidatorIgnore -->
 <template>
-   <ul class="slds-timeline">
+    <div class="exp-list">
         <template for:each={workExperienceList} for:item="work">
-            <li key={work.id}>
-                <div class="slds-timeline__item_expandable slds-timeline__item_task slds-is-open" data-index={work.id}>
-                    <div class="slds-media">
-                        <div class="slds-media__figure">
-    
-                            <button class="slds-button slds-button_icon"  data-id={work.id} onclick={timelineHandler}>
-                             
-                                <lightning-icon class="chevron-down" icon-name="utility:chevrondown" alternative-text="Chevron Down" title="Chevron Down"
-                                size="x-small"></lightning-icon>
-                             
+            <div key={work.id} class="exp-item">
+
+                <!-- Timeline spine: dot + line -->
+                <div class="exp-spine">
+                    <div class="exp-dot">
+                        <lightning-icon icon-name="standard:task" alternative-text="Task" size="small"></lightning-icon>
+                    </div>
+                    <div class="exp-line"></div>
+                </div>
+
+                <!-- Card -->
+                <div class="exp-card">
+
+                    <!-- Top meta: role + dates + chevron toggle -->
+                    <div class="exp-header" data-id={work.id} onclick={toggleDescription}>
+                        <div class="exp-header-left">
+                            <button class="exp-chevron" data-id={work.id}>
+                                <lightning-icon class="exp-chevron-icon" icon-name="utility:chevrondown"
+                                    alternative-text="Toggle" size="x-small">
+                                </lightning-icon>
                             </button>
-    
-                            <div class="slds-icon_container slds-icon-standard-task slds-timeline__icon" title="task">
-                                <lightning-icon icon-name="standard:task" alternative-text="Task" title="Task"
-                                    size="small"></lightning-icon>
-                            </div>
-    
+                            <h3 class="exp-role">{work.Role}</h3>
                         </div>
-    
-                        <div class="slds-media__body">
-                            <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
-                                <div
-                                    class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
-                                    <h3 class="slds-truncate" title={work.Role}>
-                                        <strong>{work.Role}</strong>
-                                    </h3>
-    
-                                </div>
-                                <div class="slds-timeline__actions slds-timeline__actions_inline">
-                                    <template if:true={work.IsCurrent}>
-                                        <p class="slds-timeline__date">{work.JobStartDate} - Current</p>
-                                    </template>
+                        <span class="exp-dates">
+                            <template if:true={work.IsCurrent}>
+                                {work.JobStartDate} &ndash; Present
+                            </template>
+                            <template if:false={work.IsCurrent}>
+                                {work.JobStartDate} &ndash; {work.JobEndDate}
+                            </template>
+                        </span>
+                    </div>
 
-                                    <template if:false={work.IsCurrent}>
-                                        <p class="slds-timeline__date">{work.JobStartDate} - {work.JobEndDate}</p>
-                                    </template>
-                                   
-                                </div>
-                            </div>
-                            <p class="slds-var-m-horizontal_xx-small">
-                                {work.companyName}, {work.WorkLocation}
-                                <span>
-                                    <img src={work.companyLogo} alt={work.companyName} class="company-logo">
-                                </span>
-                            </p>
-                        
-                            <article
-                                class="slds-box slds-timeline__item_details slds-theme_shade slds-var-m-top_x-small slds-var-m-horizontal_xx-small slds-var-p-around_medium">
-                                <div>
-                                    <lightning-record-view-form
-                                    object-api-name={work.apiName}
-                                    record-id={work.id}
-                                    >
-                                            <lightning-output-field field-name="JobDescription__c" variant="label-hidden"> </lightning-output-field>
-                                
-                                </lightning-record-view-form>
-                                </div>
-                            </article>
-
-    
+                    <!-- Company + location + logo -->
+                    <div class="exp-company">
+                        <div class="exp-company-info">
+                            <img src={work.companyLogo} alt={work.companyName} class="exp-logo">
+                            <span class="exp-company-name">{work.companyName}</span>
+                            <span class="exp-location">&middot; {work.WorkLocation}</span>
                         </div>
                     </div>
-                </div>
-            </li>
-        </template>
-      
-    </ul>
 
+                    <!-- Job description — collapsible, light frosted for black rich text -->
+                    <div class="exp-description" data-desc={work.id}>
+                        <lightning-record-view-form object-api-name={work.apiName} record-id={work.id}>
+                            <lightning-output-field field-name="JobDescription__c" variant="label-hidden">
+                            </lightning-output-field>
+                        </lightning-record-view-form>
+                    </div>
+
+                </div>
+            </div>
+        </template>
+    </div>
 </template>

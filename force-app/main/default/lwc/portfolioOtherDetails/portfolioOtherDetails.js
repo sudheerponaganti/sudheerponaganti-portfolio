@@ -13,6 +13,9 @@ export default class PortfolioOtherDetails extends LightningElement {
     superBadgesList =[];
     languages=[];
     @api recordId
+
+    _focusObserver = null;
+    _scaleInitialized = false;
     @wire(getRecord, { recordId: '$recordId', fields: [SUPER_BADGE_FIELD, AWARDS_FIELD,LANGUAGES_FIELD]})
     otherDetailsHandler({data,error}){
         if(data){
@@ -21,6 +24,43 @@ export default class PortfolioOtherDetails extends LightningElement {
         }
         if(error){
             console.error('otherDetails error', error)
+        }
+    }
+
+    renderedCallback() {
+        if (this._scaleInitialized) return;
+        const cards = this.template.querySelectorAll('.other-box');
+        if (!cards.length) return;
+        this._scaleInitialized = true;
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reducedMotion) {
+            cards.forEach(el => el.classList.add('focus-scale--visible'));
+            return;
+        }
+
+        this._focusObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('focus-scale--visible');
+                        this._focusObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.10, rootMargin: '0px 0px -20px 0px' }
+        );
+
+        cards.forEach((card, i) => {
+            card.style.setProperty('--focus-delay', `${i * 0.06}s`);
+            this._focusObserver.observe(card);
+        });
+    }
+
+    disconnectedCallback() {
+        if (this._focusObserver) {
+            this._focusObserver.disconnect();
+            this._focusObserver = null;
         }
     }
 

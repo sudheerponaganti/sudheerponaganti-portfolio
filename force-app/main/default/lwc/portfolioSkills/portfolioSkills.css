@@ -1,16 +1,366 @@
-.slds-badge{
-    --slds-c-badge-color-background: #189ab4;
-    /* --slds-c-badge-color-border :  #f6c403; */
-    --slds-c-badge-text-color : white;
-    font-size: 16px;
-    font-weight: 500;
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioSkills.css  ·  Apple Liquid Glass Dark Mode
+   Glass cards per category · per-accent colored pills · no SLDS badge
+   ═══════════════════════════════════════════════════════════════════ */
+
+:host {
+    --font:    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    --teal:    #5ac8f5;
+    --blue:    #0a84ff;
+    --purple:  #bf5af2;
+    --green:   #30d158;
+    --white-1: rgba(255, 255, 255, 1.00);
+    --white-2: rgba(235, 235, 245, 0.72);
+    --glass-bg:     rgba(255, 255, 255, 0.08);
+    --glass-blur:   blur(24px) saturate(180%) brightness(1.06);
+    --glass-edge:   rgba(255, 255, 255, 0.14);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-h2{
-    padding: 8px 16px;
-    background: #003b73;
-    font-weight: bold;
-    font-size: 20px;
-    color:  #fff;
-    border-radius:5px;
+/* ── Outer list ─────────────────────────────────────────────────── */
+.skills-list {
+    padding: 20px 20px 32px;
+    font-family: var(--font);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ── Section wrapper — entrance animation ───────────────────────── */
+.skill-section {
+    opacity: 0;
+    transform: scale(0.84) translateY(20px);
+    transition:
+        opacity   0.50s var(--ease-out) var(--focus-delay, 0s),
+        transform 0.50s var(--spring)   var(--focus-delay, 0s);
+}
+
+.skill-section.focus-scale--visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* ── Glass card ─────────────────────────────────────────────────── */
+.skill-card {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--glass-edge);
+    box-shadow:
+        0  2px  8px rgba(0, 0, 0, 0.20),
+        0  8px 28px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.36),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    transition: box-shadow 0.25s ease, transform 0.25s var(--ease-out);
+}
+
+.skill-section.focus-scale--visible .skill-card:hover {
+    transform: translateY(-3px) scale(1.008);
+    box-shadow:
+        0  4px 16px rgba(0, 0, 0, 0.26),
+        0 16px 40px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.44),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+}
+
+/* ── Card header — now a button for full-row tap target ─────────── */
+.skill-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.18s ease;
+}
+
+.skill-card-header:hover {
+    background: rgba(255, 255, 255, 0.11);
+}
+
+/* Left group: icon + label */
+.skill-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ── Chevron icon ───────────────────────────────────────────────── */
+.skill-chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    fill: rgba(235, 235, 245, 0.45);
+    transition: transform 0.25s var(--ease-out), fill 0.18s ease;
+    transform-origin: center;
+}
+
+/* Rotated when collapsed */
+.skill-card-header[aria-expanded="true"] .skill-chevron {
+    transform: rotate(-90deg);
+}
+
+/* ── Collapsible badge area ─────────────────────────────────────── */
+
+/* ── Icon dot — per accent ──────────────────────────────────────── */
+.skill-header-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.teal-icon {
+    background: rgba(90, 200, 245, 0.16);
+    border: 1px solid rgba(90, 200, 245, 0.30);
+    box-shadow: 0 0 12px rgba(90, 200, 245, 0.14);
+}
+
+.blue-icon {
+    background: rgba(10, 132, 255, 0.16);
+    border: 1px solid rgba(10, 132, 255, 0.30);
+    box-shadow: 0 0 12px rgba(10, 132, 255, 0.14);
+}
+
+.purple-icon {
+    background: rgba(191, 90, 242, 0.16);
+    border: 1px solid rgba(191, 90, 242, 0.30);
+    box-shadow: 0 0 12px rgba(191, 90, 242, 0.14);
+}
+
+.green-icon {
+    background: rgba(48, 209, 88, 0.16);
+    border: 1px solid rgba(48, 209, 88, 0.30);
+    box-shadow: 0 0 12px rgba(48, 209, 88, 0.14);
+}
+
+.orange-icon {
+    background: rgba(255, 159, 10, 0.16);
+    border: 1px solid rgba(255, 159, 10, 0.30);
+    box-shadow: 0 0 12px rgba(255, 159, 10, 0.14);
+}
+
+.mint-icon {
+    background: rgba(99, 230, 226, 0.16);
+    border: 1px solid rgba(99, 230, 226, 0.30);
+    box-shadow: 0 0 12px rgba(99, 230, 226, 0.14);
+}
+
+/* ── Section heading text ───────────────────────────────────────── */
+.skill-heading {
+    color: var(--white-1);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    font-family: var(--font);
+}
+
+/* ── Badge area ─────────────────────────────────────────────────── */
+.skill-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 16px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+    overflow: hidden;
+    max-height: 1000px;
+    transition: max-height 0.38s var(--ease-out), padding 0.28s ease, opacity 0.22s ease;
+    opacity: 1;
+}
+
+.skill-badges--collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+}
+
+/* ── Base pill ──────────────────────────────────────────────────── */
+.skill-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font);
+    letter-spacing: 0.1px;
+    color: var(--white-1);
+    white-space: nowrap;
+    transition: transform 0.18s var(--ease-out), box-shadow 0.18s ease;
+}
+
+.skill-pill:hover {
+    transform: translateY(-2px);
+}
+
+/* ── Per-category pill accents ──────────────────────────────────── */
+.skill-pill--teal {
+    background: rgba(90, 200, 245, 0.14);
+    border: 1px solid rgba(90, 200, 245, 0.30);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 0 8px rgba(90, 200, 245, 0.10);
+}
+.skill-pill--teal:hover {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30), 0 4px 14px rgba(90, 200, 245, 0.24);
+}
+
+.skill-pill--blue {
+    background: rgba(10, 132, 255, 0.14);
+    border: 1px solid rgba(10, 132, 255, 0.30);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 0 8px rgba(10, 132, 255, 0.10);
+}
+.skill-pill--blue:hover {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30), 0 4px 14px rgba(10, 132, 255, 0.24);
+}
+
+.skill-pill--purple {
+    background: rgba(191, 90, 242, 0.14);
+    border: 1px solid rgba(191, 90, 242, 0.30);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 0 8px rgba(191, 90, 242, 0.10);
+}
+.skill-pill--purple:hover {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30), 0 4px 14px rgba(191, 90, 242, 0.24);
+}
+
+.skill-pill--green {
+    background: rgba(48, 209, 88, 0.14);
+    border: 1px solid rgba(48, 209, 88, 0.30);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 0 8px rgba(48, 209, 88, 0.10);
+}
+.skill-pill--green:hover {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30), 0 4px 14px rgba(48, 209, 88, 0.24);
+}
+
+.skill-pill--orange {
+    background: rgba(255, 159, 10, 0.14);
+    border: 1px solid rgba(255, 159, 10, 0.30);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 0 8px rgba(255, 159, 10, 0.10);
+}
+.skill-pill--orange:hover {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30), 0 4px 14px rgba(255, 159, 10, 0.24);
+}
+
+.skill-pill--mint {
+    background: rgba(99, 230, 226, 0.14);
+    border: 1px solid rgba(99, 230, 226, 0.30);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20), 0 0 8px rgba(99, 230, 226, 0.10);
+}
+.skill-pill--mint:hover {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30), 0 4px 14px rgba(99, 230, 226, 0.24);
+}
+
+/* ── Tablet (768px – 1024px) — compact, same intent as mobile ────── */
+@media (max-width: 1024px) {
+    .skills-list {
+        padding: 14px 12px 20px;
+        gap: 12px;
+    }
+
+    .skill-card {
+        border-radius: 16px;
+    }
+
+    .skill-card-header {
+        padding: 11px 14px;
+        gap: 8px;
+    }
+
+    .skill-header-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+    }
+
+    .skill-heading {
+        font-size: 13px;
+    }
+
+    .skill-badges {
+        gap: 7px;
+        padding: 12px 14px 14px;
+    }
+
+    .skill-pill {
+        font-size: 12px;
+        padding: 4px 11px;
+    }
+}
+
+/* ── Mobile (≤ 767px) — tightest layout ─────────────────────────── */
+@media (max-width: 767px) {
+    .skills-list {
+        padding: 10px 8px 16px;
+        gap: 10px;
+    }
+
+    .skill-card {
+        border-radius: 14px;
+    }
+
+    .skill-card-header {
+        padding: 10px 12px;
+        gap: 6px;
+    }
+
+    .skill-header-left {
+        gap: 8px;
+    }
+
+    .skill-header-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+    }
+
+    .skill-heading {
+        font-size: 12px;
+    }
+
+    .skill-chevron {
+        width: 18px;
+        height: 18px;
+    }
+
+    .skill-badges {
+        gap: 6px;
+        padding: 10px 12px 12px;
+    }
+
+    .skill-pill {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .skill-section {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .skill-section.focus-scale--visible .skill-card:hover,
+    .skill-pill:hover {
+        transform: none;
+    }
+    .skill-badges,
+    .skill-chevron {
+        transition: none !important;
+    }
 }

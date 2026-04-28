@@ -1,24 +1,144 @@
+<!-- sldsValidatorIgnore -->
 <template>
-  <div class="skills-wrapper slds-var-p-around_x-large">
-    <h2 class="slds-text-heading_medium slds-var-m-bottom_medium">Technical Skills</h2>
-  <template for:each={technicalSkills} for:item="techSkill">
-    <lightning-badge label={techSkill} class="slds-badge slds-var-m-bottom_medium custom-badge" key={techSkill}></lightning-badge>
-  </template>
+    <div class="skills-list">
 
-    <h2 class="slds-text-heading_medium slds-var-m-bottom_medium">Tools and Softwares</h2>
-    <template for:each={softwareTools} for:item="tool">
-    <lightning-badge label={tool} class="slds-badge slds-var-m-bottom_medium custom-badge" key={tool}></lightning-badge>
-  </template>
+        <!-- Technical Skills -->
+        <div class="skill-section" data-accent="teal">
+            <div class="skill-card">
+                <button class="skill-card-header" data-section="technical" onclick={toggleSection}
+                        aria-expanded={isTechnicalCollapsed}>
+                    <div class="skill-header-left">
+                        <div class="skill-header-icon teal-icon">
+                            <lightning-icon icon-name="utility:apex" alternative-text="Technical" size="x-small"></lightning-icon>
+                        </div>
+                        <span class="skill-heading">Technical Skills</span>
+                    </div>
+                    <svg class="skill-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </button>
+                <div class={technicalBadgesClass}>
+                    <template for:each={technicalSkills} for:item="techSkill">
+                        <span key={techSkill} class="skill-pill skill-pill--teal">{techSkill}</span>
+                    </template>
+                </div>
+            </div>
+        </div>
 
-    <h2 class="slds-text-heading_medium slds-var-m-bottom_medium">Software Methodologies</h2>
-    <template for:each={softwareMethodologies} for:item="method">
-    <lightning-badge label={method} class="slds-badge slds-var-m-bottom_medium custom-badge" key={method}></lightning-badge>
-  </template>
+        <!-- Tools & Software -->
+        <div class="skill-section" data-accent="blue">
+            <div class="skill-card">
+                <button class="skill-card-header" data-section="tools" onclick={toggleSection}
+                        aria-expanded={isToolsCollapsed}>
+                    <div class="skill-header-left">
+                        <div class="skill-header-icon blue-icon">
+                            <lightning-icon icon-name="utility:settings" alternative-text="Tools" size="x-small"></lightning-icon>
+                        </div>
+                        <span class="skill-heading">Tools &amp; Software</span>
+                    </div>
+                    <svg class="skill-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </button>
+                <div class={toolsBadgesClass}>
+                    <template for:each={softwareTools} for:item="tool">
+                        <span key={tool} class="skill-pill skill-pill--blue">{tool}</span>
+                    </template>
+                </div>
+            </div>
+        </div>
 
-    <h2 class="slds-text-heading_medium slds-var-m-bottom_medium">Soft Skills</h2>
-    <template for:each={softSkills} for:item="softSkill">
-    <lightning-badge label={softSkill} class="slds-badge slds-var-m-bottom_medium custom-badge" key={softSkill}></lightning-badge>
-   </template>
+        <!-- Software Methodologies -->
+        <div class="skill-section" data-accent="purple">
+            <div class="skill-card">
+                <button class="skill-card-header" data-section="methodologies" onclick={toggleSection}
+                        aria-expanded={isMethodsCollapsed}>
+                    <div class="skill-header-left">
+                        <div class="skill-header-icon purple-icon">
+                            <lightning-icon icon-name="utility:flow" alternative-text="Methodologies" size="x-small"></lightning-icon>
+                        </div>
+                        <span class="skill-heading">Software Methodologies</span>
+                    </div>
+                    <svg class="skill-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </button>
+                <div class={methodsBadgesClass}>
+                    <template for:each={softwareMethodologies} for:item="method">
+                        <span key={method} class="skill-pill skill-pill--purple">{method}</span>
+                    </template>
+                </div>
+            </div>
+        </div>
 
-  </div>
+        <!-- Soft Skills -->
+        <div class="skill-section" data-accent="green">
+            <div class="skill-card">
+                <button class="skill-card-header" data-section="soft" onclick={toggleSection}
+                        aria-expanded={isSoftCollapsed}>
+                    <div class="skill-header-left">
+                        <div class="skill-header-icon green-icon">
+                            <lightning-icon icon-name="utility:user" alternative-text="Soft Skills" size="x-small"></lightning-icon>
+                        </div>
+                        <span class="skill-heading">Soft Skills</span>
+                    </div>
+                    <svg class="skill-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </button>
+                <div class={softBadgesClass}>
+                    <template for:each={softSkills} for:item="softSkill">
+                        <span key={softSkill} class="skill-pill skill-pill--green">{softSkill}</span>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agentic Tools -->
+        <div class="skill-section" data-accent="orange">
+            <div class="skill-card">
+                <button class="skill-card-header" data-section="agentictools" onclick={toggleSection}
+                        aria-expanded={isAgenticToolsCollapsed}>
+                    <div class="skill-header-left">
+                        <div class="skill-header-icon orange-icon">
+                            <lightning-icon icon-name="utility:connected_apps" alternative-text="Agentic Tools" size="x-small"></lightning-icon>
+                        </div>
+                        <span class="skill-heading">Agentic Tools</span>
+                    </div>
+                    <svg class="skill-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </button>
+                <div class={agenticToolsBadgesClass}>
+                    <template for:each={agenticTools} for:item="tool">
+                        <span key={tool} class="skill-pill skill-pill--orange">{tool}</span>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agentic AI -->
+        <div class="skill-section" data-accent="mint">
+            <div class="skill-card">
+                <button class="skill-card-header" data-section="agenticai" onclick={toggleSection}
+                        aria-expanded={isAgenticAICollapsed}>
+                    <div class="skill-header-left">
+                        <div class="skill-header-icon mint-icon">
+                            <lightning-icon icon-name="utility:einstein" alternative-text="Agentic AI" size="x-small"></lightning-icon>
+                        </div>
+                        <span class="skill-heading">Agentic AI</span>
+                    </div>
+                    <svg class="skill-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </button>
+                <div class={agenticAIBadgesClass}>
+                    <template for:each={agenticAI} for:item="ai">
+                        <span key={ai} class="skill-pill skill-pill--mint">{ai}</span>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </template>

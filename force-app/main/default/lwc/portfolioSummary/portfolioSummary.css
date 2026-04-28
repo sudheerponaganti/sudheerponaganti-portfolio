@@ -1,0 +1,99 @@
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioSummary.css
+   Apple Liquid Glass · HIG Dark Mode
+   Rich text field stores inline black color — solution is a light
+   frosted glass surface (white bg at 0.88 opacity) that makes dark
+   text legible while still feeling like a glass card on the aurora.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:host {
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+    --teal: #5ac8f5;
+    --sp-6: 24px;
+    --sp-8: 32px;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+    display: block;
+    padding: var(--sp-8) var(--sp-6);
+    font-family: var(--font-display);
+}
+
+/* ── Frosted glass card — light surface for rich text readability ──
+   Rich text saved with black font. Light frosted card reads perfectly.
+   Same backdrop-filter as before — the blur still shows the aurora
+   underneath. bg opacity 0.88 = opaque enough for legibility but
+   still translucent at edges.                                       */
+.summary-wrap {
+    position: relative;
+    border-radius: 20px;
+    padding: var(--sp-8) var(--sp-6);
+
+    /* Light frosted glass — white at 88% opacity, blurs aurora behind */
+    background: rgba(255, 255, 255, 0.88);
+    -webkit-backdrop-filter: blur(28px) saturate(160%) brightness(1.04);
+            backdrop-filter: blur(28px) saturate(160%) brightness(1.04);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow:
+        0  4px 16px rgba(0, 0, 0, 0.14),
+        0 16px 40px rgba(0, 0, 0, 0.18),
+        inset 0  1px 0 rgba(255, 255, 255, 1.00),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+
+    /* Dark text — matches the inline black from rich text editor */
+    color: rgba(20, 20, 30, 0.90);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+
+    animation: summary-enter 0.5s var(--ease-out) both;
+}
+
+/* Let the base components render naturally — no color override needed */
+lightning-record-view-form {
+    background: transparent !important;
+}
+
+lightning-output-field {
+    background: transparent !important;
+}
+
+@keyframes summary-enter {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Tablet (768px – 1024px) — compact, same intent as mobile ────── */
+@media (max-width: 1024px) {
+    :host {
+        padding: 18px 14px;
+    }
+
+    .summary-wrap {
+        padding: 22px 18px;
+        border-radius: 16px;
+        font-size: 15px;
+    }
+}
+
+/* ── Mobile (≤ 767px) — tighter padding ─────────────────────────── */
+@media (max-width: 767px) {
+    :host {
+        padding: 12px 10px;
+    }
+
+    .summary-wrap {
+        padding: 16px 14px;
+        border-radius: 14px;
+        font-size: 14px;
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .summary-wrap {
+        animation: none;
+        opacity: 1;
+    }
+}

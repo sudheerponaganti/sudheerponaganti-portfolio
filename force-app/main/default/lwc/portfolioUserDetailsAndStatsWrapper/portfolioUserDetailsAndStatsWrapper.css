@@ -1,26 +1,65 @@
-.user-details-stats-wrapper{
-    /* background-color: #003087; */
-    background-color:#0074b7;
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioUserDetailsAndStatsWrapper.css
+   Apple Liquid Glass · HIG Dark Mode
+   This wrapper is the page-level shell that contains portfolioBanner
+   and portfolioUserStats. It must share the same dark aurora base as
+   the banner so both components flow as one continuous surface.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Canonical design tokens — mirrors portfolioBanner exactly ───── */
+:host {
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+
+    /* Apple HIG dark-mode system colours — full published set */
+    --blue:   #0a84ff;
+    --green:  #30d158;
+    --yellow: #ffd60a;
+    --orange: #ff9f0a;
+    --red:    #ff453a;
+    --indigo: #5e5ce6;
+    --purple: #bf5af2;
+    --teal:   #5ac8f5;
+    --mint:   #63e6e2;
+
+    /* Label hierarchy */
+    --label-1: rgba(255, 255, 255, 1.00);
+    --label-2: rgba(235, 235, 245, 0.60);
+    --label-3: rgba(235, 235, 245, 0.38);
+
+    /* 4pt spacing grid */
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+
+    /* Easing */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Page-level wrapper — transparent, floats above portfolioWrapper aurora ──
+   The single aurora + orb-drift animation now lives exclusively in
+   portfolioWrapper.css. This wrapper is just a transparent layout shell.
+*/
+.user-details-stats-wrapper {
     position: relative;
-    /* text-align: center; */
+    width: 100%;
+    overflow: hidden;
+    background: transparent;
 }
-/* .user-details-stats-wrapper::after{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://www.transparenttextures.com/patterns/white-leather.png");
-  opacity: 0.5;
-  z-index: 1;
-} */
-.user-details-stats-wrapper-content{
-  position: relative;
-  z-index: 2;
+
+/* ── Content layer — sits above the aurora background ───────────── */
+.user-details-stats-wrapper-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
 }
-@media (max-width:720px){
-    .user-details-stats-wrapper{
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+    .user-details-stats-wrapper {
         text-align: center;
     }
 }
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+/* (orb animation is managed by portfolioWrapper — see portfolioWrapper.css) */

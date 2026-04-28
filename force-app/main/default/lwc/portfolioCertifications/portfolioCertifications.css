@@ -1,35 +1,304 @@
-img{
-    height:60px;
-    margin-right:16px;
-}
-h2{
-    padding: 8px 16px;
-    background: #003b73;
-    font-weight: bold;
-    font-size: 20px;
-    color:  #fff;
-    border-radius:5px;
+/* ═══════════════════════════════════════════════════════════════════
+   portfolioCertifications.css
+   Apple Liquid Glass · HIG Dark Mode
+   Collapsible sections with chevron headers.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:host {
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                    "Helvetica Neue", Arial, sans-serif;
+    --yellow: #ffd60a;
+    --blue:   #0a84ff;
+    --label-1: rgba(255, 255, 255, 1.00);
+    --label-2: rgba(235, 235, 245, 0.72);
+    --glass-bg:     rgba(255, 255, 255, 0.09);
+    --glass-blur:   blur(20px) saturate(180%) brightness(1.06);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Outer padding — breathing room around both cert sections */
+    display: block;
+    padding: 16px 16px 24px;
 }
 
-.cert-box{
-    background: #189ab4;
-    color:#fff;
-    font-size: 20px;
-    padding: 12px;
-    border-radius: 5px;
+/* ── Section wrapper ────────────────────────────────────────────── */
+.cert-section {
+    margin: 0 0 8px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Section header button — full-width tappable row ───────────── */
+.cert-section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-.cert-box:hover{
-    background:#0074b7;
-    cursor:pointer;
-    color:#fff;
-}
-.cert-box:hover .classic-theme{
-    --slds-c-icon-color-foreground-default :#fff;
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.18s ease;
 }
 
-.classic-theme{
-    --slds-c-icon-color-foreground-default :#003b73;
+.cert-section-header:hover {
+    background: rgba(255, 255, 255, 0.13);
+}
+
+.cert-section-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ── Section icon dot ───────────────────────────────────────────── */
+.cert-section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+}
+
+.cert-icon--yellow {
+    background: rgba(255, 214, 10, 0.16);
+    border: 1px solid rgba(255, 214, 10, 0.30);
+    box-shadow: 0 0 12px rgba(255, 214, 10, 0.14);
+}
+
+.cert-icon--blue {
+    background: rgba(10, 132, 255, 0.16);
+    border: 1px solid rgba(10, 132, 255, 0.30);
+    box-shadow: 0 0 12px rgba(10, 132, 255, 0.14);
+}
+
+/* ── Section title ──────────────────────────────────────────────── */
+.cert-section-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--label-1);
+}
+
+/* ── Chevron ────────────────────────────────────────────────────── */
+.cert-chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    fill: rgba(235, 235, 245, 0.45);
+    transition: transform 0.25s var(--ease-out), fill 0.18s ease;
+    transform-origin: center;
+}
+
+/* Collapsed state — chevron points right */
+.cert-section-header[aria-expanded="true"] .cert-chevron {
+    transform: rotate(-90deg);
+}
+
+/* ── Collapsible grid wrapper ───────────────────────────────────── */
+.cert-grid {
+    overflow: hidden;
+    max-height: 2000px;
+    transition: max-height 0.42s var(--ease-out), opacity 0.25s ease;
+    opacity: 1;
+}
+
+.cert-grid--collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+/* ── Cert logo ───────────────────────────────────────────────────── */
+img {
+    height: 52px;
+    width: auto;
+    margin-right: 14px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.40));
+}
+
+/* ── Cert / item glass card ─────────────────────────────────────── */
+.cert-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--label-1);
+    letter-spacing: 0.1px;
+    border-radius: 14px;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0  2px  8px rgba(0, 0, 0, 0.20),
+        0  8px 24px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    cursor: pointer;
+
+    /* Focus-scale entrance */
+    opacity: 0;
+    transform: scale(0.80) translateY(24px);
+    transition:
+        opacity   0.50s var(--ease-out) var(--focus-delay, 0s),
+        transform 0.50s var(--spring)   var(--focus-delay, 0s),
+        box-shadow 0.24s ease;
+}
+
+.cert-box.focus-scale--visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.cert-box.focus-scale--visible:hover {
+    transform: translateY(-4px) scale(1.02);
+    color: var(--label-1);
+    box-shadow:
+        0  4px 16px rgba(0, 0, 0, 0.26),
+        0 16px 36px rgba(0, 0, 0, 0.30),
+        0 10px 28px rgba(255, 214, 10, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+    border-color: rgba(255, 214, 10, 0.28);
+}
+
+/* ── Classic icon override ──────────────────────────────────────── */
+.classic-theme {
+    --slds-c-icon-color-foreground-default: rgba(235, 235, 245, 0.70);
+}
+
+.cert-box:hover .classic-theme {
+    --slds-c-icon-color-foreground-default: rgba(255, 255, 255, 1.00);
+}
+
+/* ── Tablet (768px – 1024px) — compact, same intent as mobile ────── */
+@media (max-width: 1024px) {
+    :host {
+        padding: 12px 10px 18px;
+    }
+
+    .cert-section {
+        margin-bottom: 8px;
+        border-radius: 16px;
+    }
+
+    .cert-section-header {
+        padding: 12px 16px;
+    }
+
+    .cert-section-header-left {
+        gap: 10px;
+    }
+
+    .cert-section-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+    }
+
+    .cert-section-title {
+        font-size: 12px;
+    }
+
+    .cert-chevron {
+        width: 18px;
+        height: 18px;
+    }
+
+    img {
+        height: 42px;
+        margin-right: 12px;
+    }
+
+    .cert-box {
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-size: 13px;
+        gap: 10px;
+    }
+}
+
+/* ── Mobile (≤ 767px) — tightest layout ─────────────────────────── */
+@media (max-width: 767px) {
+    :host {
+        padding: 10px 8px 16px;
+    }
+
+    .cert-section {
+        margin-bottom: 6px;
+        border-radius: 14px;
+    }
+
+    .cert-section-header {
+        padding: 11px 14px;
+    }
+
+    .cert-section-header-left {
+        gap: 8px;
+    }
+
+    .cert-section-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+    }
+
+    .cert-section-title {
+        font-size: 11px;
+    }
+
+    .cert-chevron {
+        width: 18px;
+        height: 18px;
+    }
+
+    img {
+        height: 36px;
+        margin-right: 10px;
+    }
+
+    .cert-box {
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        gap: 8px;
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .cert-box {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        animation: none;
+    }
+    .cert-box.focus-scale--visible:hover {
+        transform: none;
+    }
+    .cert-grid,
+    .cert-chevron {
+        transition: none !important;
+    }
 }

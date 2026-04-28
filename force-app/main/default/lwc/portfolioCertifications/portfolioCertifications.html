@@ -1,34 +1,73 @@
+<!-- sldsValidatorIgnore -->
 <template>
 
     <template if:false={isCertificateOpen}>
-   <h2 class="slds-var-m-bottom_medium">Salesforce Certifications</h2> 
-<Lightning-layout multiple-rows>
-    <template for:each={sfCertificationList} for:item="sfCertItem">
-        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small" key={sfCertItem}>
-            <div class="cert-box" data-name={sfCertItem.certificateName} onclick={openCertificateHandler}>
-                <img src={sfCertItem.certificateLogo} alt="Certificate Logo" >
-                <span>{sfCertItem.certificateName}</span>
+
+        <!-- ── Salesforce Certifications ──────────────────────────── -->
+        <div class="cert-section">
+            <button class="cert-section-header" onclick={toggleSfSection}
+                    aria-expanded={isSfCollapsed}>
+                <div class="cert-section-header-left">
+                    <div class="cert-section-icon cert-icon--yellow">
+                        <lightning-icon icon-name="utility:salesforce1" alternative-text="Salesforce" size="x-small"></lightning-icon>
+                    </div>
+                    <h2 class="cert-section-title">Salesforce Certifications</h2>
+                </div>
+                <svg class="cert-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+                </svg>
+            </button>
+
+            <div class={sfGridClass}>
+                <lightning-layout multiple-rows>
+                    <template for:each={sfCertificationList} for:item="sfCertItem">
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3"
+                                               padding="around-small" key={sfCertItem.certificateName}>
+                            <div class="cert-box" data-name={sfCertItem.certificateName} onclick={openCertificateHandler}>
+                                <img src={sfCertItem.certificateLogo} alt="Certificate Logo">
+                                <span>{sfCertItem.certificateName}</span>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
             </div>
-        </lightning-layout-item>
-    </template>
-</Lightning-layout>
+        </div>
 
-   <h2 class="slds-var-m-bottom_medium">Other Certifications</h2> 
+        <!-- ── Other Certifications ──────────────────────────────── -->
+        <div class="cert-section">
+            <button class="cert-section-header" onclick={toggleOtherSection}
+                    aria-expanded={isOtherCollapsed}>
+                <div class="cert-section-header-left">
+                    <div class="cert-section-icon cert-icon--blue">
+                        <lightning-icon icon-name="utility:ribbon" alternative-text="Other" size="x-small"></lightning-icon>
+                    </div>
+                    <h2 class="cert-section-title">Other Certifications</h2>
+                </div>
+                <svg class="cert-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M7 10l5 5 5-5H7z"/>
+                </svg>
+            </button>
 
-   <Lightning-layout multiple-rows>
-    <template for:each={otherCertificationList} for:item="otherCertItem">
-        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small" key={otherCertItem}>
-            <div class="cert-box" data-name={otherCertItem} onclick={openCertificateHandler}>
-                <lightning-icon  class="classic-theme" icon-name="utility:classic_interface" alternative-text="classic_interface" title="classic_interfac" size="large"></lightning-icon>
-                <span class="slds-var-m-left_medium">{otherCertItem}</span>
+            <div class={otherGridClass}>
+                <lightning-layout multiple-rows>
+                    <template for:each={otherCertificationList} for:item="otherCertItem">
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3"
+                                               padding="around-small" key={otherCertItem}>
+                            <div class="cert-box" data-name={otherCertItem} onclick={openCertificateHandler}>
+                                <lightning-icon class="classic-theme" icon-name="utility:classic_interface"
+                                    alternative-text="classic_interface" size="large"></lightning-icon>
+                                <span class="slds-var-m-left_medium">{otherCertItem}</span>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
             </div>
-        </lightning-layout-item>
-    </template>
-</Lightning-layout>
-</template>
+        </div>
 
-<template if:true={isCertificateOpen}>
-<c-portfolio-certifications-template cert-name ={certName} onback={backHandler}></c-portfolio-certifications-template>
-</template>
+    </template>
+
+    <template if:true={isCertificateOpen}>
+        <c-portfolio-certifications-template cert-name={certName} onback={backHandler}></c-portfolio-certifications-template>
+    </template>
 
 </template>

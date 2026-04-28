@@ -1,25 +1,61 @@
 <template>
-    <lightning-layout multiple-rows>
-        <lightning-layout-item size="12"  small-device-size="6" medium-device-size="4" large-device-size="3">
-            <img src={trailheadRankImg} alt="Trailhead Rank Image" >
-        </lightning-layout-item>
-        <lightning-layout-item size="12"  small-device-size="6" medium-device-size="4" large-device-size="3">
-           <div>
-            <h3>Badges</h3>
-            <p>{badges}</p>
-           </div>
-        </lightning-layout-item>
-        <lightning-layout-item size="12"  small-device-size="6" medium-device-size="4" large-device-size="3">
-            <div>
-                <h3>Points</h3>
-                <p>{points}</p>
+    <section class="stats-section">
+
+        <!-- ── Rank card ── -->
+        <div class="stat-card stat-card--rank">
+            <div class="rank-ring-wrapper">
+                <img src={trailheadRankImg} alt="Trailhead Rank" class="rank-img" />
             </div>
-        </lightning-layout-item>
-        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3">
-            <div>
-                <h3>Trails</h3>
-                <p>{trails}</p>
+            <span class="rank-label">{rank}</span>
+            <span class="stat-sub-label">Trailhead Rank</span>
+        </div>
+
+        <!-- ── Badges card ── -->
+        <div class="stat-card stat-card--badges">
+            <div class="stat-icon-pill stat-icon-pill--badges">
+                <!--
+                    Shield with star — badge/achievement
+                    Single filled path, no fill="none" conflict, no rgba in attributes.
+                    Renders cleanly at 20px in all browsers and LWR shadow DOM.
+                -->
+                <svg class="stat-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path fill="currentColor" d="M12 1L3 5v7c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5L12 1zm0 4l1.5 3H17l-2.5 2 1 3L12 11.5 8.5 13l1-3L7 8h3.5L12 5z"/>
+                </svg>
             </div>
-        </lightning-layout-item>
-    </lightning-layout>
+            <p class="stat-number" data-target={badges} data-type="badges">0</p>
+            <span class="stat-label">Badges</span>
+        </div>
+
+        <!-- ── Points card ── -->
+        <div class="stat-card stat-card--points">
+            <div class="stat-icon-pill stat-icon-pill--points">
+                <!--
+                    Lightning bolt — energy/points
+                    Clean single filled path, solid and crisp at 20px.
+                -->
+                <svg class="stat-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path fill="currentColor" d="M7 2v11h3v9l7-12h-4l4-8z"/>
+                </svg>
+            </div>
+            <p class="stat-number" data-target={points} data-type="points">0</p>
+            <span class="stat-label">Points</span>
+        </div>
+
+        <!-- ── Trails card ── -->
+        <div class="stat-card stat-card--trails">
+            <div class="stat-icon-pill stat-icon-pill--trails">
+                <!--
+                    Mountain silhouette — trails/journeys.
+                    Two-peak polygon, single filled path, crisp at 20px.
+                    Large left peak (tall) + smaller right peak.
+                -->
+                <svg class="stat-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path fill="currentColor" d="M1 21L9 5l4 8 2-3 6 9H1z"/>
+                </svg>
+            </div>
+            <p class="stat-number" data-target={trails} data-type="trails">0</p>
+            <span class="stat-label">Trails</span>
+        </div>
+
+    </section>
 </template>
